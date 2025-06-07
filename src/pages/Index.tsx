@@ -1,12 +1,23 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React, { useState } from 'react';
+import { Search, MapPin, User, Plus, Menu, Heart, MessageCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import CategoryGrid from '@/components/CategoryGrid';
+import FeaturedListings from '@/components/FeaturedListings';
+import HeroSection from '@/components/HeroSection';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <Header />
+      <HeroSection />
+      <CategoryGrid />
+      <FeaturedListings />
+      <Footer />
     </div>
   );
 };
