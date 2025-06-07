@@ -2,67 +2,47 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Beef, Wheat, Tractor, Home, Truck, Wrench, Droplets, TreePine } from 'lucide-react';
+import { useCategories } from '@/hooks/useCategories';
 
-const categories = [
-  { 
-    id: 'livestock', 
-    name: 'Livestock', 
-    icon: Beef, 
-    count: '2,456 ads',
-    subcategories: ['Cattle', 'Goats', 'Sheep', 'Poultry', 'Buffalo']
-  },
-  { 
-    id: 'crops', 
-    name: 'Crops & Seeds', 
-    icon: Wheat, 
-    count: '1,823 ads',
-    subcategories: ['Wheat', 'Rice', 'Cotton', 'Sugarcane', 'Vegetables']
-  },
-  { 
-    id: 'equipment', 
-    name: 'Farm Equipment', 
-    icon: Tractor, 
-    count: '987 ads',
-    subcategories: ['Tractors', 'Harvesters', 'Plows', 'Tillers', 'Sprayers']
-  },
-  { 
-    id: 'land', 
-    name: 'Agricultural Land', 
-    icon: Home, 
-    count: '654 ads',
-    subcategories: ['For Sale', 'For Rent', 'Partnerships', 'Warehouses']
-  },
-  { 
-    id: 'vehicles', 
-    name: 'Farm Vehicles', 
-    icon: Truck, 
-    count: '432 ads',
-    subcategories: ['Trucks', 'Pickups', 'Trailers', 'ATVs']
-  },
-  { 
-    id: 'tools', 
-    name: 'Tools & Parts', 
-    icon: Wrench, 
-    count: '789 ads',
-    subcategories: ['Hand Tools', 'Spare Parts', 'Maintenance', 'Storage']
-  },
-  { 
-    id: 'irrigation', 
-    name: 'Irrigation', 
-    icon: Droplets, 
-    count: '345 ads',
-    subcategories: ['Pumps', 'Pipes', 'Sprinklers', 'Drip Systems']
-  },
-  { 
-    id: 'forestry', 
-    name: 'Forestry', 
-    icon: TreePine, 
-    count: '234 ads',
-    subcategories: ['Timber', 'Saplings', 'Wood Products', 'Tools']
-  }
-];
+const iconMap = {
+  'Beef': Beef,
+  'Wheat': Wheat,
+  'Tractor': Tractor,
+  'Home': Home,
+  'Truck': Truck,
+  'Wrench': Wrench,
+  'Droplets': Droplets,
+  'TreePine': TreePine
+};
 
 const CategoryGrid = () => {
+  const { data: categories, isLoading } = useCategories();
+
+  if (isLoading) {
+    return (
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">
+            Browse Categories
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[...Array(8)].map((_, i) => (
+              <div key={i} className="bg-white rounded-lg shadow-sm p-6 border border-gray-200 animate-pulse">
+                <div className="flex items-center mb-4">
+                  <div className="bg-gray-200 p-3 rounded-lg w-12 h-12"></div>
+                  <div className="ml-4">
+                    <div className="h-4 bg-gray-200 rounded w-20 mb-2"></div>
+                    <div className="h-3 bg-gray-200 rounded w-16"></div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -71,12 +51,12 @@ const CategoryGrid = () => {
         </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {categories.map((category) => {
-            const IconComponent = category.icon;
+          {categories?.map((category) => {
+            const IconComponent = iconMap[category.icon as keyof typeof iconMap] || Beef;
             return (
               <Link
                 key={category.id}
-                to={`/category/${category.id}`}
+                to={`/category/${category.slug}`}
                 className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-6 border border-gray-200 group"
               >
                 <div className="flex items-center mb-4">
@@ -87,16 +67,16 @@ const CategoryGrid = () => {
                     <h3 className="font-semibold text-gray-900 group-hover:text-green-600">
                       {category.name}
                     </h3>
-                    <p className="text-sm text-gray-500">{category.count}</p>
+                    <p className="text-sm text-gray-500">{category.subcategories?.length || 0} subcategories</p>
                   </div>
                 </div>
                 
                 <div className="space-y-1">
-                  {category.subcategories.slice(0, 3).map((sub) => (
-                    <p key={sub} className="text-xs text-gray-600">{sub}</p>
+                  {category.subcategories?.slice(0, 3).map((sub) => (
+                    <p key={sub.id} className="text-xs text-gray-600">{sub.name}</p>
                   ))}
-                  {category.subcategories.length > 3 && (
-                    <p className="text-xs text-green-600">+{category.subcategories.length - 3} more</p>
+                  {(category.subcategories?.length || 0) > 3 && (
+                    <p className="text-xs text-green-600">+{(category.subcategories?.length || 0) - 3} more</p>
                   )}
                 </div>
               </Link>
