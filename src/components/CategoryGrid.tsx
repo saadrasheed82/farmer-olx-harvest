@@ -1,13 +1,13 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Cow, Wheat, Tractor, Home, Truck, Wrench, Droplets, TreePine } from 'lucide-react';
+import { Beef, Wheat, Tractor, Home, Truck, Wrench, Droplets, TreePine } from 'lucide-react';
 
 const categories = [
   { 
     id: 'livestock', 
     name: 'Livestock', 
-    icon: Cow, 
+    icon: Beef, 
     count: '2,456 ads',
     subcategories: ['Cattle', 'Goats', 'Sheep', 'Poultry', 'Buffalo']
   },

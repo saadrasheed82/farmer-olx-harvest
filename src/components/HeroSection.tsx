@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Tractor, Wheat, Cow } from 'lucide-react';
+import { ArrowRight, Tractor, Wheat, Beef } from 'lucide-react';
 
 const HeroSection = () => {
   return (
@@ -17,7 +17,7 @@ const HeroSection = () => {
           
           <div className="flex justify-center space-x-6 mb-12">
             <div className="flex items-center text-green-100">
-              <Cow className="h-8 w-8 mr-2" />
+              <Beef className="h-8 w-8 mr-2" />
               <span>Livestock</span>
             </div>
             <div className="flex items-center text-green-100">
