@@ -1,34 +1,31 @@
-import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React from 'react';
+import { useSearchParams, Link } from 'react-router-dom';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import { useListings } from '@/hooks/useListings';
 import { Filter, Grid, List, MapPin, Calendar, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { useCategories, useSubcategories } from '@/hooks/useCategories';
-import { useListings } from '@/hooks/useListings';
-import { useFavorites, useToggleFavorite } from '@/hooks/useFavorites';
-import { useAuth } from '@/hooks/useAuth';
 import { format } from 'date-fns';
+import { useAuth } from '@/hooks/useAuth';
+import { useFavorites, useToggleFavorite } from '@/hooks/useFavorites';
 
-const Category = () => {
-  const { categoryId } = useParams();
-  const [viewMode, setViewMode] = useState('grid');
-  const [sortBy, setSortBy] = useState('newest');
-  const [selectedSubcategory, setSelectedSubcategory] = useState<string>('all');
-  const [priceMin, setPriceMin] = useState('');
-  const [priceMax, setPriceMax] = useState('');
+const Search = () => {
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get('q') || '';
+  const location = searchParams.get('location') || 'all';
+  const [viewMode, setViewMode] = React.useState('grid');
+  const [sortBy, setSortBy] = React.useState<'newest' | 'oldest' | 'price-low' | 'price-high'>('newest');
+  const [priceMin, setPriceMin] = React.useState('');
+  const [priceMax, setPriceMax] = React.useState('');
 
-  const { data: categories } = useCategories();
-  const category = categories?.find(cat => cat.slug === categoryId);
-  const { data: subcategories } = useSubcategories(category?.id);
-  
   const { data: listings, isLoading } = useListings({
-    categoryId: category?.id,
-    subcategoryId: selectedSubcategory === 'all' ? undefined : selectedSubcategory,
+    searchQuery: query,
+    location: location === 'all' ? undefined : location,
     priceMin: priceMin ? parseFloat(priceMin) : undefined,
-    priceMax: priceMax ? parseFloat(priceMax) : undefined
+    priceMax: priceMax ? parseFloat(priceMax) : undefined,
+    sortBy
   });
 
   const { data: favorites } = useFavorites();
@@ -47,24 +44,20 @@ const Category = () => {
     });
   };
 
-  if (!category) {
-    return <div>Category not found</div>;
-  }
-
   return (
     <div className="min-h-screen bg-background">
       <Header />
       
-      {/* Category Header */}
+      {/* Search Header */}
       <div className="bg-green-50 py-8">
         <div className="container mx-auto px-4">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">{category.name}</h1>
-          <p className="text-gray-600 mb-4">{category.description}</p>
-          
-          {/* Breadcrumb */}
-          <nav className="text-sm text-gray-500">
-            <span>Home</span> &gt; <span className="text-green-600">{category.name}</span>
-          </nav>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            Search Results
+          </h1>
+          <p className="text-gray-600 mb-4">
+            {query ? `Showing results for "${query}"` : 'All listings'}
+            {location !== 'all' ? ` in ${location}` : ''}
+          </p>
         </div>
       </div>
 
@@ -96,24 +89,6 @@ const Category = () => {
                   />
                 </div>
               </div>
-
-              {/* Subcategories */}
-              <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Subcategory
-                </label>
-                <Select value={selectedSubcategory} onValueChange={setSelectedSubcategory}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="All subcategories" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All subcategories</SelectItem>
-                    {subcategories?.map((sub) => (
-                      <SelectItem key={sub.id} value={sub.id}>{sub.name}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
             </div>
           </div>
 
@@ -126,7 +101,10 @@ const Category = () => {
               </div>
               
               <div className="flex items-center space-x-4">
-                <Select value={sortBy} onValueChange={setSortBy}>
+                <Select 
+                  value={sortBy} 
+                  onValueChange={(value: 'newest' | 'oldest' | 'price-low' | 'price-high') => setSortBy(value)}
+                >
                   <SelectTrigger className="w-48">
                     <SelectValue />
                   </SelectTrigger>
@@ -241,4 +219,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default Search; 
