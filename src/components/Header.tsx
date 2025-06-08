@@ -1,16 +1,27 @@
 import React from 'react';
-import { Search, MapPin, User, Plus, Menu, Heart, MessageCircle } from 'lucide-react';
+import { Search, MapPin, User, Plus, Menu, Heart, MessageCircle, Settings } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useSearch } from '@/hooks/useSearch';
+import SearchSuggestions from './SearchSuggestions';
+import { useAuth } from '@/hooks/useAuth';
 
 const Header = () => {
   const { searchQuery, setSearchQuery, searchLocation, setSearchLocation, handleSearch } = useSearch();
+  const [showSuggestions, setShowSuggestions] = React.useState(false);
+  const { user } = useAuth();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     handleSearch();
+    setShowSuggestions(false);
+  };
+
+  const handleSuggestionSelect = (suggestion: string) => {
+    setSearchQuery(suggestion);
+    handleSearch();
+    setShowSuggestions(false);
   };
 
   return (
@@ -29,21 +40,30 @@ const Header = () => {
               <MessageCircle className="h-4 w-4 mr-1" />
               Chat
             </Link>
-            <Link to="/login" className="flex items-center hover:text-green-200">
-              <User className="h-4 w-4 mr-1" />
-              Login
-            </Link>
+            {user ? (
+              <>
+                <Link to="/settings" className="flex items-center hover:text-green-200">
+                  <Settings className="h-4 w-4 mr-1" />
+                  Settings
+                </Link>
+              </>
+            ) : (
+              <Link to="/login" className="flex items-center hover:text-green-200">
+                <User className="h-4 w-4 mr-1" />
+                Login
+              </Link>
+            )}
           </div>
         </div>
 
         {/* Main header */}
-        <div className="flex items-center justify-between py-4">
+        <div className="flex items-center justify-between py-4 gap-4">
           <Link to="/" className="text-2xl font-bold text-white">
             FarmX
           </Link>
 
           {/* Search bar */}
-          <form onSubmit={handleSubmit} className="flex-1 max-w-2xl mx-8">
+          <form onSubmit={handleSubmit} className="flex-1 max-w-2xl mx-8 relative">
             <div className="relative flex">
               <Input
                 type="text"
@@ -51,6 +71,11 @@ const Header = () => {
                 className="flex-1 rounded-l-lg border-0 bg-white text-gray-900 placeholder-gray-500"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={() => setShowSuggestions(true)}
+                onBlur={() => {
+                  // Delay hiding suggestions to allow clicking them
+                  setTimeout(() => setShowSuggestions(false), 200);
+                }}
               />
               <div className="flex items-center px-3 bg-white border-l">
                 <MapPin className="h-4 w-4 text-gray-500 mr-2" />
@@ -70,20 +95,26 @@ const Header = () => {
                 <Search className="h-4 w-4" />
               </Button>
             </div>
+            
+            {showSuggestions && (
+              <SearchSuggestions
+                query={searchQuery}
+                onSelect={handleSuggestionSelect}
+              />
+            )}
           </form>
 
           {/* Action buttons */}
           <div className="flex items-center space-x-4">
-            <Link to="/favorites" className="p-2 hover:bg-green-700 rounded">
-              <Heart className="h-5 w-5" />
-            </Link>
-            <Link to="/my-listings" className="p-2 hover:bg-green-700 rounded">
-              <User className="h-5 w-5" />
+            <Link to="/favorites">
+              <Button variant="ghost" className="text-white hover:text-green-200">
+                <Heart className="h-5 w-5" />
+              </Button>
             </Link>
             <Link to="/sell">
-              <Button className="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold">
+              <Button className="bg-yellow-500 hover:bg-yellow-600 text-gray-900">
                 <Plus className="h-4 w-4 mr-2" />
-                SELL
+                Sell
               </Button>
             </Link>
           </div>

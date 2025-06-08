@@ -24,8 +24,17 @@ export interface Listing {
   title: string;
   description: string;
   price: number;
+  price_unit?: 'total' | 'per_kg' | 'per_acre' | 'per_unit';
+  quantity?: number;
+  quantity_unit?: 'kg' | 'tons' | 'acres' | 'units';
+  harvest_date?: string;
+  organic?: 'yes' | 'no';
+  certification?: 'organic' | 'gap' | 'other';
+  negotiable?: 'yes' | 'no';
+  condition: 'new' | 'excellent' | 'good' | 'fair' | 'poor' | null;
   location_city: string;
   location_province: string;
+  location_address?: string;
   status: 'active' | 'sold' | 'expired' | 'draft';
   category_id: string;
   subcategory_id: string | null;
@@ -36,7 +45,9 @@ export interface Listing {
   images: string[] | null;
   urgent: boolean;
   featured: boolean;
-  condition: 'new' | 'excellent' | 'good' | 'fair' | 'poor' | null;
+  delivery_available?: 'yes' | 'no';
+  min_order_quantity?: number;
+  payment_terms?: 'advance' | 'partial' | 'delivery' | 'credit';
   category?: Category;
   subcategory?: Subcategory;
   user?: Profile;

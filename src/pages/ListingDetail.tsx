@@ -162,6 +162,84 @@ const ListingDetail = () => {
                     <span className="ml-2 text-gray-900">{listing.subcategory?.name}</span>
                   </div>
                 )}
+                {listing.price_unit && (
+                  <div>
+                    <span className="text-gray-500">Price Unit:</span>
+                    <span className="ml-2 text-gray-900">
+                      {listing.price_unit === 'total' ? 'Total Price' :
+                       listing.price_unit === 'per_kg' ? 'Per Kg' :
+                       listing.price_unit === 'per_acre' ? 'Per Acre' :
+                       'Per Unit'}
+                    </span>
+                  </div>
+                )}
+                {listing.quantity && (
+                  <div>
+                    <span className="text-gray-500">Quantity:</span>
+                    <span className="ml-2 text-gray-900">
+                      {listing.quantity} {listing.quantity_unit}
+                    </span>
+                  </div>
+                )}
+                {listing.condition && (
+                  <div>
+                    <span className="text-gray-500">Condition:</span>
+                    <span className="ml-2 text-gray-900 capitalize">{listing.condition}</span>
+                  </div>
+                )}
+                {listing.negotiable && (
+                  <div>
+                    <span className="text-gray-500">Negotiable:</span>
+                    <span className="ml-2 text-gray-900 capitalize">{listing.negotiable}</span>
+                  </div>
+                )}
+                {listing.harvest_date && (
+                  <div>
+                    <span className="text-gray-500">Harvest Date:</span>
+                    <span className="ml-2 text-gray-900">
+                      {format(new Date(listing.harvest_date), 'MMM d, yyyy')}
+                    </span>
+                  </div>
+                )}
+                {listing.organic && (
+                  <div>
+                    <span className="text-gray-500">Organic:</span>
+                    <span className="ml-2 text-gray-900 capitalize">{listing.organic}</span>
+                  </div>
+                )}
+                {listing.certification && (
+                  <div>
+                    <span className="text-gray-500">Certification:</span>
+                    <span className="ml-2 text-gray-900 capitalize">{listing.certification}</span>
+                  </div>
+                )}
+                {listing.delivery_available && (
+                  <div>
+                    <span className="text-gray-500">Delivery Available:</span>
+                    <span className="ml-2 text-gray-900 capitalize">{listing.delivery_available}</span>
+                  </div>
+                )}
+                {listing.min_order_quantity && (
+                  <div>
+                    <span className="text-gray-500">Minimum Order:</span>
+                    <span className="ml-2 text-gray-900">
+                      {listing.min_order_quantity} {listing.quantity_unit}
+                    </span>
+                  </div>
+                )}
+                {listing.payment_terms && (
+                  <div>
+                    <span className="text-gray-500">Payment Terms:</span>
+                    <span className="ml-2 text-gray-900 capitalize">{listing.payment_terms}</span>
+                  </div>
+                )}
+                <div>
+                  <span className="text-gray-500">Location:</span>
+                  <span className="ml-2 text-gray-900">
+                    {listing.location_address && `${listing.location_address}, `}
+                    {listing.location_city}, {listing.location_province}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
