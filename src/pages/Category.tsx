@@ -17,7 +17,7 @@ const Category = () => {
   const { categoryId } = useParams();
   const [viewMode, setViewMode] = useState('grid');
   const [sortBy, setSortBy] = useState('newest');
-  const [selectedSubcategory, setSelectedSubcategory] = useState<string>('');
+  const [selectedSubcategory, setSelectedSubcategory] = useState<string>('all');
   const [priceMin, setPriceMin] = useState('');
   const [priceMax, setPriceMax] = useState('');
 
@@ -27,7 +27,7 @@ const Category = () => {
   
   const { data: listings, isLoading } = useListings({
     categoryId: category?.id,
-    subcategoryId: selectedSubcategory || undefined,
+    subcategoryId: selectedSubcategory === 'all' ? undefined : selectedSubcategory,
     priceMin: priceMin ? parseFloat(priceMin) : undefined,
     priceMax: priceMax ? parseFloat(priceMax) : undefined
   });
@@ -108,7 +108,7 @@ const Category = () => {
                     <SelectValue placeholder="All subcategories" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All subcategories</SelectItem>
+                    <SelectItem value="all">All subcategories</SelectItem>
                     {subcategories?.map((sub) => (
                       <SelectItem key={sub.id} value={sub.id}>{sub.name}</SelectItem>
                     ))}
