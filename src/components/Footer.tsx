@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react';
@@ -34,49 +33,39 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Categories */}
+          {/* Support */}
           <div>
-            <h4 className="text-lg font-semibold text-white mb-4">Categories</h4>
+            <h4 className="text-lg font-semibold text-white mb-4">Support</h4>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/category/livestock" className="hover:text-white">Livestock</Link></li>
-              <li><Link to="/category/crops" className="hover:text-white">Crops & Seeds</Link></li>
-              <li><Link to="/category/equipment" className="hover:text-white">Farm Equipment</Link></li>
-              <li><Link to="/category/land" className="hover:text-white">Agricultural Land</Link></li>
-              <li><Link to="/category/irrigation" className="hover:text-white">Irrigation</Link></li>
+              <li><Link to="/help" className="hover:text-white">Help Center</Link></li>
+              <li><Link to="/terms" className="hover:text-white">Terms of Service</Link></li>
+              <li><Link to="/privacy" className="hover:text-white">Privacy Policy</Link></li>
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* Contact Info */}
           <div>
             <h4 className="text-lg font-semibold text-white mb-4">Contact Us</h4>
-            <div className="space-y-3 text-sm">
-              <div className="flex items-center">
-                <Phone className="h-4 w-4 mr-2" />
-                <span>+92 300 1234567</span>
-              </div>
-              <div className="flex items-center">
+            <ul className="space-y-2 text-sm">
+              <li className="flex items-center">
                 <Mail className="h-4 w-4 mr-2" />
-                <span>support@farmx.pk</span>
-              </div>
-              <div className="flex items-center">
+                support@farmx.pk
+              </li>
+              <li className="flex items-center">
+                <Phone className="h-4 w-4 mr-2" />
+                +92 300 1234567
+              </li>
+              <li className="flex items-center">
                 <MapPin className="h-4 w-4 mr-2" />
-                <span>Lahore, Pakistan</span>
-              </div>
-            </div>
+                Islamabad, Pakistan
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-sm">
-              © 2024 FarmX. All rights reserved.
-            </p>
-            <div className="flex space-x-6 mt-4 md:mt-0 text-sm">
-              <Link to="/privacy" className="hover:text-white">Privacy Policy</Link>
-              <Link to="/terms" className="hover:text-white">Terms of Service</Link>
-              <Link to="/help" className="hover:text-white">Help Center</Link>
-            </div>
-          </div>
+        {/* Bottom Bar */}
+        <div className="border-t border-gray-800 mt-8 pt-8 text-sm text-center">
+          <p>&copy; {new Date().getFullYear()} FarmX. All rights reserved.</p>
         </div>
       </div>
     </footer>

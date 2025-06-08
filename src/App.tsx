@@ -13,6 +13,14 @@ import MyListings from "./pages/MyListings";
 import Search from "./pages/Search";
 import ListingDetail from "./pages/ListingDetail";
 import EditListing from "./pages/EditListing";
+import AboutUs from "./pages/AboutUs";
+import HowItWorks from "./pages/HowItWorks";
+import SafetyTips from "./pages/SafetyTips";
+import SuccessStories from "./pages/SuccessStories";
+import Blog from "./pages/Blog";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
+import Help from "./pages/Help";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +40,14 @@ const App = () => (
             <Route path="/search" element={<Search />} />
             <Route path="/listing/:id" element={<ListingDetail />} />
             <Route path="/edit-listing/:id" element={<EditListing />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/how-it-works" element={<HowItWorks />} />
+            <Route path="/safety-tips" element={<SafetyTips />} />
+            <Route path="/success-stories" element={<SuccessStories />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/help" element={<Help />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
