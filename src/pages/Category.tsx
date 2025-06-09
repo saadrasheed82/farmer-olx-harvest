@@ -4,8 +4,7 @@ import { Filter, Grid, List, MapPin, Calendar, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import Layout from '@/components/Layout';
 import { useCategories, useSubcategories } from '@/hooks/useCategories';
 import { useListings } from '@/hooks/useListings';
 import { useFavorites, useToggleFavorite } from '@/hooks/useFavorites';
@@ -52,11 +51,9 @@ const Category = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      
+    <Layout>
       {/* Category Header */}
-      <div className="bg-green-50 py-8">
+      <div className="bg-green-50">
         <div className="container mx-auto px-4">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">{category.name}</h1>
           <p className="text-gray-600 mb-4">{category.description}</p>
@@ -179,9 +176,7 @@ const Category = () => {
                     to={`/listing/${listing.id}`}
                     className="group"
                   >
-                    <div
-                      className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-200 overflow-hidden"
-                    >
+                    <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-200 overflow-hidden">
                       <div className="relative">
                         <img
                           src={listing.images?.[0] || "https://images.unsplash.com/photo-1465379944081-7f47de8d74ac?w=400&h=300&fit=crop"}
@@ -199,29 +194,30 @@ const Category = () => {
                               e.preventDefault();
                               handleToggleFavorite(listing.id);
                             }}
-                            className="absolute top-2 right-2 p-2 bg-white rounded-full shadow-sm hover:bg-gray-50"
+                            className="absolute top-2 right-2 p-2 bg-white rounded-full shadow-md hover:scale-110 transition-transform"
                           >
-                            <Heart className={`h-4 w-4 ${isFavorite(listing.id) ? 'text-red-500 fill-red-500' : 'text-gray-600'}`} />
+                            <Heart 
+                              className={`h-5 w-5 ${isFavorite(listing.id) ? 'text-red-500 fill-red-500' : 'text-gray-600'}`}
+                            />
                           </button>
                         )}
                       </div>
-
                       <div className="p-4">
                         <div className="flex justify-between items-start mb-2">
+                          <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">
+                            {listing.category?.name}
+                          </span>
                           <span className="text-lg font-bold text-green-600">
                             Rs {listing.price?.toLocaleString()}
                           </span>
                         </div>
-
-                        <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">
+                        <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-green-600 transition-colors">
                           {listing.title}
                         </h3>
-
                         <div className="flex items-center text-sm text-gray-500 mb-2">
                           <MapPin className="h-4 w-4 mr-1" />
                           {listing.location_city}, {listing.location_province}
                         </div>
-
                         <div className="flex items-center text-xs text-gray-400">
                           <Calendar className="h-3 w-3 mr-1" />
                           {format(new Date(listing.created_at), 'MMM d, yyyy')}
@@ -235,9 +231,7 @@ const Category = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 

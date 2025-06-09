@@ -96,10 +96,26 @@ const Sell = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    console.log('Form submission started');
+    console.log('Form data:', {
+      selectedCategory,
+      selectedSubcategory,
+      formData,
+      selectedFiles
+    });
+    
     if (!selectedCategory || !formData.title || !formData.price || !formData.quantity || !formData.quantityUnit) {
+      console.log('Validation failed:', {
+        hasCategory: !!selectedCategory,
+        hasTitle: !!formData.title,
+        hasPrice: !!formData.price,
+        hasQuantity: !!formData.quantity,
+        hasQuantityUnit: !!formData.quantityUnit
+      });
+      
       toast({
         title: "Missing information",
-        description: "Please fill in all required fields.",
+        description: "Please fill in all required fields: Category, Title, Price, Quantity, and Quantity Unit",
         variant: "destructive"
       });
       return;
@@ -107,6 +123,7 @@ const Sell = () => {
 
     try {
       if (!user) {
+        console.log('No user found');
         toast({
           title: "Authentication error",
           description: "Please sign in to post an ad.",
@@ -119,9 +136,12 @@ const Sell = () => {
       // Upload images first
       let imageUrls: string[] = [];
       if (selectedFiles.length > 0) {
+        console.log('Starting image upload');
         try {
           imageUrls = await uploadImages(selectedFiles, user.id);
+          console.log('Images uploaded successfully:', imageUrls);
         } catch (error) {
+          console.error('Image upload error:', error);
           toast({
             title: "Error uploading images",
             description: "Failed to upload one or more images. Please try again.",
@@ -162,6 +182,7 @@ const Sell = () => {
       console.log('Creating listing with data:', listingData);
       
       await createListing.mutateAsync(listingData);
+      console.log('Listing created successfully');
 
       toast({
         title: "Listing created!",

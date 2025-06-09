@@ -1,18 +1,44 @@
 
 import React from 'react';
-import { Heart, MapPin, Calendar } from 'lucide-react';
+import { Heart, MapPin, Calendar, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useFeaturedListings } from '@/hooks/useListings';
 import { useFavorites, useToggleFavorite } from '@/hooks/useFavorites';
 import { useAuth } from '@/hooks/useAuth';
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { staggerContainer, fadeIn, cardHover } from '@/lib/animations';
 
 const FeaturedListings = () => {
   const { data: listings, isLoading } = useFeaturedListings();
   const { data: favorites } = useFavorites();
   const { user } = useAuth();
   const toggleFavorite = useToggleFavorite();
+  const ref = React.useRef(null);
+  const isInView = React.useRef(false);
+  
+  // Check if element is in view
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          isInView.current = true;
+        }
+      },
+      { threshold: 0.1 }
+    );
+    
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+    
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, []);
 
   const isFavorite = (listingId: string) => {
     return favorites?.some(fav => fav.listing_id === listingId) || false;

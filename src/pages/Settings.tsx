@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, Bell, Settings as SettingsIcon, Shield, Languages, Phone, Mail, MapPin } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import Layout from '@/components/Layout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -135,10 +134,8 @@ const Settings = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      
-      <main className="container mx-auto px-4 py-8">
+    <Layout>
+      <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-3xl font-bold mb-8">Settings</h1>
 
@@ -213,7 +210,7 @@ const Settings = () => {
                       />
                     </div>
                   </div>
-                  <Button type="submit">Save Profile</Button>
+                  <Button type="submit" className="mt-4">Save Changes</Button>
                 </form>
               </div>
             </TabsContent>
@@ -365,10 +362,8 @@ const Settings = () => {
             </TabsContent>
           </Tabs>
         </div>
-      </main>
-
-      <Footer />
-    </div>
+      </div>
+    </Layout>
   );
 };
 
