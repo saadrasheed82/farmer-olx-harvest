@@ -600,6 +600,53 @@ const Sell = () => {
               </Card>
             )}
 
+            {/* Contact Information */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Contact Information</CardTitle>
+                <CardDescription>How buyers can reach you</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <label htmlFor="contact_name" className="block text-sm font-medium text-gray-700 mb-2">
+                    Contact Name
+                  </label>
+                  <Input
+                    id="contact_name"
+                    {...register('contact_name')}
+                    placeholder="Your name"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="contact_phone" className="block text-sm font-medium text-gray-700 mb-2">
+                    Phone Number
+                  </label>
+                  <Input
+                    id="contact_phone"
+                    {...register('contact_phone')}
+                    placeholder="Your phone number"
+                    type="tel"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="contact_email" className="block text-sm font-medium text-gray-700 mb-2">
+                    Email Address
+                  </label>
+                  <Input
+                    id="contact_email"
+                    {...register('contact_email')}
+                    placeholder="Your email address"
+                    type="email"
+                  />
+                  {errors.contact_email && (
+                    <p className="mt-1 text-sm text-red-500">{errors.contact_email.message}</p>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+
             {/* Submit Button */}
             <Button
               type="submit"

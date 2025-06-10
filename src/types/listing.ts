@@ -52,4 +52,5 @@ export interface Listing {
   subcategory?: Subcategory;
   user?: Profile;
   field_values?: ListingFieldValue[];
+  contact_phone?: string;
 } 
