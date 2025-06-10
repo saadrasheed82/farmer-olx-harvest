@@ -9,11 +9,32 @@ import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/components/ui/use-toast';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { LoadingSpinner } from '@/components/ui/loading-spinner';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+type Language = 'en' | 'ur';
+
+interface PreferencesState {
+  language: Language;
+  currency: string;
+  darkMode: boolean;
+  showFavorites: boolean;
+  autoLocation: boolean;
+}
 
 const Settings = () => {
   const { user, updateProfile, updatePassword, updatePreferences } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { language, setLanguage, t } = useLanguage();
+  const [isChangingLanguage, setIsChangingLanguage] = useState(false);
 
   // Profile Settings
   const [profileForm, setProfileForm] = useState({
@@ -42,8 +63,8 @@ const Settings = () => {
   });
 
   // Preferences Settings
-  const [preferences, setPreferences] = useState({
-    language: 'en',
+  const [preferences, setPreferences] = useState<PreferencesState>({
+    language: language,
     currency: 'PKR',
     darkMode: false,
     showFavorites: true,
@@ -61,13 +82,13 @@ const Settings = () => {
         province: profileForm.province
       });
       toast({
-        title: "Profile Updated",
-        description: "Your profile has been successfully updated.",
+        title: t('common.success'),
+        description: t('settings.profile.updateSuccess'),
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to update profile. Please try again.",
+        title: t('common.error'),
+        description: t('settings.profile.updateError'),
         variant: "destructive"
       });
     }
@@ -116,18 +137,43 @@ const Settings = () => {
     }
   };
 
+  const handleLanguageChange = async (newLanguage: Language) => {
+    try {
+      setIsChangingLanguage(true);
+      await setLanguage(newLanguage);
+      setPreferences(prev => ({ ...prev, language: newLanguage }));
+      toast({
+        title: t('common.success'),
+        description: t('settings.preferences.languageUpdated'),
+      });
+    } catch (error) {
+      toast({
+        title: t('common.error'),
+        description: t('settings.preferences.languageUpdateError'),
+        variant: "destructive"
+      });
+    } finally {
+      setIsChangingLanguage(false);
+    }
+  };
+
   const handlePreferenceChange = async (key: string, value: any) => {
+    if (key === 'language') {
+      await handleLanguageChange(value as Language);
+      return;
+    }
+
     setPreferences(prev => ({ ...prev, [key]: value }));
     try {
       await updatePreferences({ ...preferences, [key]: value });
       toast({
-        title: "Preferences Updated",
-        description: "Your preferences have been saved.",
+        title: t('common.success'),
+        description: t('settings.preferences.updated'),
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to update preferences.",
+        title: t('common.error'),
+        description: t('settings.preferences.updateError'),
         variant: "destructive"
       });
     }
@@ -137,80 +183,80 @@ const Settings = () => {
     <Layout>
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold mb-8">Settings</h1>
+          <h1 className="text-3xl font-bold mb-8">{t('common.settings')}</h1>
 
           <Tabs defaultValue="profile" className="space-y-4">
             <TabsList>
               <TabsTrigger value="profile" className="flex items-center gap-2">
                 <User className="h-4 w-4" />
-                Profile
+                {t('common.profile')}
               </TabsTrigger>
               <TabsTrigger value="security" className="flex items-center gap-2">
                 <Shield className="h-4 w-4" />
-                Security
+                {t('common.security')}
               </TabsTrigger>
               <TabsTrigger value="notifications" className="flex items-center gap-2">
                 <Bell className="h-4 w-4" />
-                Notifications
+                {t('common.notifications')}
               </TabsTrigger>
               <TabsTrigger value="preferences" className="flex items-center gap-2">
                 <SettingsIcon className="h-4 w-4" />
-                Preferences
+                {t('common.preferences')}
               </TabsTrigger>
             </TabsList>
 
             <TabsContent value="profile" className="space-y-4">
               <div className="bg-white p-6 rounded-lg shadow-sm border">
-                <h2 className="text-xl font-semibold mb-4">Profile Information</h2>
+                <h2 className="text-xl font-semibold mb-4">{t('settings.profile.title')}</h2>
                 <form onSubmit={handleProfileSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="fullName">Full Name</Label>
+                      <Label htmlFor="fullName">{t('settings.profile.fullName')}</Label>
                       <Input
                         id="fullName"
                         value={profileForm.fullName}
                         onChange={(e) => setProfileForm(prev => ({ ...prev, fullName: e.target.value }))}
-                        placeholder="Your full name"
+                        placeholder={t('settings.profile.fullName')}
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="phone">Phone Number</Label>
+                      <Label htmlFor="phone">{t('settings.profile.phone')}</Label>
                       <Input
                         id="phone"
                         value={profileForm.phone}
                         onChange={(e) => setProfileForm(prev => ({ ...prev, phone: e.target.value }))}
-                        placeholder="Your phone number"
+                        placeholder={t('settings.profile.phone')}
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="address">Address</Label>
+                      <Label htmlFor="address">{t('settings.profile.address')}</Label>
                       <Input
                         id="address"
                         value={profileForm.address}
                         onChange={(e) => setProfileForm(prev => ({ ...prev, address: e.target.value }))}
-                        placeholder="Your address"
+                        placeholder={t('settings.profile.address')}
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="city">City</Label>
+                      <Label htmlFor="city">{t('settings.profile.city')}</Label>
                       <Input
                         id="city"
                         value={profileForm.city}
                         onChange={(e) => setProfileForm(prev => ({ ...prev, city: e.target.value }))}
-                        placeholder="Your city"
+                        placeholder={t('settings.profile.city')}
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="province">Province</Label>
+                      <Label htmlFor="province">{t('settings.profile.province')}</Label>
                       <Input
                         id="province"
                         value={profileForm.province}
                         onChange={(e) => setProfileForm(prev => ({ ...prev, province: e.target.value }))}
-                        placeholder="Your province"
+                        placeholder={t('settings.profile.province')}
                       />
                     </div>
                   </div>
-                  <Button type="submit" className="mt-4">Save Changes</Button>
+                  <Button type="submit" className="mt-4">{t('common.save')}</Button>
                 </form>
               </div>
             </TabsContent>
@@ -321,21 +367,28 @@ const Settings = () => {
 
             <TabsContent value="preferences" className="space-y-4">
               <div className="bg-white p-6 rounded-lg shadow-sm border">
-                <h2 className="text-xl font-semibold mb-4">App Preferences</h2>
-                <div className="space-y-6">
+                <h2 className="text-xl font-semibold mb-4">{t('settings.preferences.title')}</h2>
+                <div className="space-y-4">
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
-                      <Label>Language</Label>
-                      <p className="text-sm text-gray-500">Choose your preferred language</p>
+                      <Label>{t('settings.preferences.language')}</Label>
                     </div>
-                    <select
-                      value={preferences.language}
-                      onChange={(e) => handlePreferenceChange('language', e.target.value)}
-                      className="border rounded p-2"
-                    >
-                      <option value="en">English</option>
-                      <option value="ur">Urdu</option>
-                    </select>
+                    <div className="flex items-center gap-2">
+                      {isChangingLanguage && <LoadingSpinner />}
+                      <Select
+                        value={preferences.language}
+                        onValueChange={(value) => handlePreferenceChange('language', value as Language)}
+                        disabled={isChangingLanguage}
+                      >
+                        <SelectTrigger className="w-[180px]">
+                          <SelectValue placeholder={t('settings.preferences.language')} />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="en">{t('settings.languageOptions.en')}</SelectItem>
+                          <SelectItem value="ur">{t('settings.languageOptions.ur')}</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">

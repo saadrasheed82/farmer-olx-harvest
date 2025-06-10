@@ -4,7 +4,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import { AnimatePresence } from "framer-motion";
+import ScrollToTop from "./components/ScrollToTop";
 import Index from "./pages/Index";
 import Category from "./pages/Category";
 import Sell from "./pages/Sell";
@@ -57,18 +59,23 @@ const AnimatedRoutes = () => {
   );
 };
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <AnimatedRoutes />
-        </BrowserRouter>
-      </TooltipProvider>
-    </AuthProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <AuthProvider>
+          <LanguageProvider>
+            <TooltipProvider>
+              <ScrollToTop />
+              <AnimatedRoutes />
+              <Toaster />
+              <Sonner />
+            </TooltipProvider>
+          </LanguageProvider>
+        </AuthProvider>
+      </BrowserRouter>
+    </QueryClientProvider>
+  );
+};
 
 export default App;

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Shield, AlertTriangle, Eye, UserCheck, CreditCard, MessageSquare } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import Layout from '@/components/Layout';
 
 const SafetyTips = () => {
   const safetyCategories = [
@@ -68,28 +67,25 @@ const SafetyTips = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      
-      <main className="container mx-auto px-4 py-12">
+    <Layout>
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-4xl font-bold text-center mb-8">Safety Tips</h1>
+        
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl font-bold text-center mb-4">Safety Tips</h1>
-          <p className="text-xl text-gray-600 text-center mb-12">
-            Your safety is our top priority. Follow these guidelines for secure trading on FarmX.
+          <p className="text-gray-600 text-center mb-8">
+            Your safety is our top priority. Follow these guidelines to ensure a secure trading experience.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {safetyCategories.map((category, index) => (
               <div key={index} className="bg-white rounded-lg shadow-sm p-6">
                 <div className="flex items-center mb-4">
-                  <div className="bg-gray-50 p-3 rounded-lg mr-4">
-                    {category.icon}
-                  </div>
-                  <h2 className="text-xl font-semibold">{category.title}</h2>
+                  {category.icon}
+                  <h2 className="text-xl font-semibold ml-3">{category.title}</h2>
                 </div>
-                <ul className="space-y-3">
-                  {category.tips.map((tip, idx) => (
-                    <li key={idx} className="flex items-start">
+                <ul className="space-y-2">
+                  {category.tips.map((tip, i) => (
+                    <li key={i} className="flex items-start">
                       <div className="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3"></div>
                       <span className="text-gray-600">{tip}</span>
                     </li>
@@ -99,22 +95,23 @@ const SafetyTips = () => {
             ))}
           </div>
 
-          <div className="mt-12 bg-red-50 rounded-lg p-8">
-            <h2 className="text-2xl font-semibold text-red-700 mb-4">Report Suspicious Activity</h2>
-            <p className="text-gray-700 mb-4">
-              If you encounter any suspicious behavior or potential scams, please report it immediately:
+          <div className="bg-green-50 p-6 rounded-lg mt-8">
+            <div className="flex items-center mb-4">
+              <MessageSquare className="w-8 h-8 text-green-600" />
+              <h2 className="text-xl font-semibold ml-3">Need Help?</h2>
+            </div>
+            <p className="text-gray-600 mb-4">
+              If you encounter any suspicious activity or need assistance, our support team is here to help.
             </p>
-            <ul className="space-y-2 text-gray-600">
-              <li>• Use the "Report" button on listings or user profiles</li>
-              <li>• Contact our support team at support@farmx.pk</li>
-              <li>• Call our safety hotline: +92 300 1234567</li>
-            </ul>
+            <div className="text-gray-600">
+              <p>Email: support@farmx.pk</p>
+              <p>Phone: +92 300 1234567</p>
+              <p>Available: 24/7</p>
+            </div>
           </div>
         </div>
-      </main>
-
-      <Footer />
-    </div>
+      </div>
+    </Layout>
   );
 };
 

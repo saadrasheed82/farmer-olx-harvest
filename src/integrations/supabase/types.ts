@@ -220,6 +220,89 @@ export type Database = {
           },
         ]
       }
+      category_fields: {
+        Row: {
+          id: string;
+          category_id: string;
+          field_name: string;
+          field_type: string;
+          field_label: string;
+          field_options: { options?: string[] } | null;
+          required: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          category_id: string;
+          field_name: string;
+          field_type: string;
+          field_label: string;
+          field_options?: { options?: string[] } | null;
+          required?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          category_id?: string;
+          field_name?: string;
+          field_type?: string;
+          field_label?: string;
+          field_options?: { options?: string[] } | null;
+          required?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "category_fields_category_id_fkey"
+            columns: ["category_id"]
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          }
+        ];
+      };
+      listing_field_values: {
+        Row: {
+          id: string;
+          listing_id: string;
+          field_id: string;
+          field_value: any;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          listing_id: string;
+          field_id: string;
+          field_value?: any;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          listing_id?: string;
+          field_id?: string;
+          field_value?: any;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "listing_field_values_listing_id_fkey"
+            columns: ["listing_id"]
+            referencedRelation: "listings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "listing_field_values_field_id_fkey"
+            columns: ["field_id"]
+            referencedRelation: "category_fields"
+            referencedColumns: ["id"]
+          }
+        ];
+      };
     }
     Views: {
       [_ in never]: never

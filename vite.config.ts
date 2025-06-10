@@ -19,4 +19,13 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  optimizeDeps: {
+    include: ['@/locales/en.json', '@/locales/ur.json'],
+  },
+  assetsInclude: ['**/*.json'],
+  build: {
+    commonjsOptions: {
+      include: [/\.json$/],
+    },
+  },
 }));

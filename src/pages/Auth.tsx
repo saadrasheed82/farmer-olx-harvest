@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import { Link, Navigate } from 'react-router-dom';
@@ -30,7 +29,7 @@ const Auth = () => {
 
     try {
       if (isLogin) {
-        const { error } = await signIn(email, password);
+        const { data, error } = await signIn(email, password);
         if (error) {
           toast({
             title: "Login failed",
@@ -42,9 +41,11 @@ const Auth = () => {
             title: "Welcome back!",
             description: "You have been logged in successfully."
           });
+          // Successfully signed in, let the AuthProvider handle navigation
+          return;
         }
       } else {
-        const { error } = await signUp(email, password, fullName);
+        const { data, error } = await signUp(email, password, fullName);
         if (error) {
           toast({
             title: "Sign up failed",
@@ -58,10 +59,10 @@ const Auth = () => {
           });
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       toast({
         title: "An error occurred",
-        description: "Please try again later.",
+        description: error?.message || "Please try again later.",
         variant: "destructive"
       });
     } finally {

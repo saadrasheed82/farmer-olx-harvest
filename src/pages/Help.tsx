@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Search, ChevronDown, MessageSquare, Phone, Mail, FileText } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { Link } from 'react-router-dom';
+import Layout from '@/components/Layout';
 
 interface FAQ {
   question: string;
@@ -90,111 +89,105 @@ const Help = () => {
     : faqs;
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      
-      <main className="container mx-auto px-4 py-12">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl font-bold text-center mb-4">Help Center</h1>
-          <p className="text-xl text-gray-600 text-center mb-8">
-            How can we help you today?
-          </p>
+    <Layout>
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-4xl font-bold text-center mb-4">Help Center</h1>
+        <p className="text-xl text-gray-600 text-center mb-8">
+          How can we help you today?
+        </p>
 
-          {/* Search */}
-          <div className="relative mb-12">
-            <input
-              type="text"
-              placeholder="Search for help..."
-              className="w-full px-12 py-4 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-          </div>
+        {/* Search */}
+        <div className="relative mb-12">
+          <input
+            type="text"
+            placeholder="Search for help..."
+            className="w-full px-12 py-4 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+        </div>
 
-          {/* Quick Links */}
-          <div className="grid md:grid-cols-3 gap-6 mb-12">
-            <Link to="/contact" className="bg-white rounded-lg shadow-sm p-6 text-center hover:shadow-md transition-shadow">
-              <MessageSquare className="w-8 h-8 text-green-600 mx-auto mb-3" />
-              <h3 className="font-semibold mb-2">Contact Support</h3>
-              <p className="text-sm text-gray-600">Get help from our team</p>
-            </Link>
-            <Link to="/safety-tips" className="bg-white rounded-lg shadow-sm p-6 text-center hover:shadow-md transition-shadow">
-              <FileText className="w-8 h-8 text-green-600 mx-auto mb-3" />
-              <h3 className="font-semibold mb-2">Safety Guide</h3>
-              <p className="text-sm text-gray-600">Learn about safe trading</p>
-            </Link>
-            <Link to="/how-it-works" className="bg-white rounded-lg shadow-sm p-6 text-center hover:shadow-md transition-shadow">
-              <Phone className="w-8 h-8 text-green-600 mx-auto mb-3" />
-              <h3 className="font-semibold mb-2">How It Works</h3>
-              <p className="text-sm text-gray-600">Platform guide</p>
-            </Link>
-          </div>
+        {/* Quick Links */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <Link to="/contact" className="bg-white rounded-lg shadow-sm p-6 text-center hover:shadow-md transition-shadow">
+            <MessageSquare className="w-8 h-8 text-green-600 mx-auto mb-3" />
+            <h3 className="font-semibold mb-2">Contact Support</h3>
+            <p className="text-sm text-gray-600">Get help from our team</p>
+          </Link>
+          <Link to="/safety-tips" className="bg-white rounded-lg shadow-sm p-6 text-center hover:shadow-md transition-shadow">
+            <FileText className="w-8 h-8 text-green-600 mx-auto mb-3" />
+            <h3 className="font-semibold mb-2">Safety Guide</h3>
+            <p className="text-sm text-gray-600">Learn about safe trading</p>
+          </Link>
+          <Link to="/how-it-works" className="bg-white rounded-lg shadow-sm p-6 text-center hover:shadow-md transition-shadow">
+            <Phone className="w-8 h-8 text-green-600 mx-auto mb-3" />
+            <h3 className="font-semibold mb-2">How It Works</h3>
+            <p className="text-sm text-gray-600">Platform guide</p>
+          </Link>
+        </div>
 
-          {/* FAQs */}
-          <div className="space-y-6">
-            <h2 className="text-2xl font-semibold mb-6">Frequently Asked Questions</h2>
-            
-            {Object.entries(filteredFaqs).map(([category, questions]) => (
-              questions.length > 0 && (
-                <div key={category} className="bg-white rounded-lg shadow-sm overflow-hidden">
-                  <button
-                    className="w-full px-6 py-4 text-left font-semibold flex justify-between items-center"
-                    onClick={() => setOpenSection(openSection === category ? null : category)}
-                  >
-                    {category}
-                    <ChevronDown
-                      className={`w-5 h-5 transition-transform ${
-                        openSection === category ? 'transform rotate-180' : ''
-                      }`}
-                    />
-                  </button>
-                  
-                  {openSection === category && (
-                    <div className="px-6 pb-4">
-                      <div className="space-y-4">
-                        {questions.map((faq, index) => (
-                          <div key={index} className="border-t pt-4">
-                            <h3 className="font-medium text-gray-900 mb-2">{faq.question}</h3>
-                            <p className="text-gray-600">{faq.answer}</p>
-                          </div>
-                        ))}
-                      </div>
+        {/* FAQs */}
+        <div className="space-y-6">
+          <h2 className="text-2xl font-semibold mb-6">Frequently Asked Questions</h2>
+          
+          {Object.entries(filteredFaqs).map(([category, questions]) => (
+            questions.length > 0 && (
+              <div key={category} className="bg-white rounded-lg shadow-sm overflow-hidden">
+                <button
+                  className="w-full px-6 py-4 text-left font-semibold flex justify-between items-center"
+                  onClick={() => setOpenSection(openSection === category ? null : category)}
+                >
+                  {category}
+                  <ChevronDown
+                    className={`w-5 h-5 transition-transform ${
+                      openSection === category ? 'transform rotate-180' : ''
+                    }`}
+                  />
+                </button>
+                
+                {openSection === category && (
+                  <div className="px-6 pb-4">
+                    <div className="space-y-4">
+                      {questions.map((faq, index) => (
+                        <div key={index} className="border-t pt-4">
+                          <h3 className="font-medium text-gray-900 mb-2">{faq.question}</h3>
+                          <p className="text-gray-600">{faq.answer}</p>
+                        </div>
+                      ))}
                     </div>
-                  )}
-                </div>
-              )
-            ))}
-          </div>
-
-          {/* Contact Section */}
-          <div className="mt-12 bg-green-50 rounded-lg p-8">
-            <h2 className="text-2xl font-semibold mb-4">Still Need Help?</h2>
-            <p className="text-gray-600 mb-6">
-              Our support team is available to assist you with any questions or concerns.
-            </p>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="flex items-center">
-                <Mail className="w-6 h-6 text-green-600 mr-3" />
-                <div>
-                  <div className="font-medium">Email Support</div>
-                  <div className="text-gray-600">support@farmx.pk</div>
-                </div>
+                  </div>
+                )}
               </div>
-              <div className="flex items-center">
-                <Phone className="w-6 h-6 text-green-600 mr-3" />
-                <div>
-                  <div className="font-medium">Phone Support</div>
-                  <div className="text-gray-600">+92 300 1234567</div>
-                </div>
+            )
+          ))}
+        </div>
+
+        {/* Contact Section */}
+        <div className="mt-12">
+          <h2 className="text-2xl font-semibold mb-4">Still Need Help?</h2>
+          <p className="text-gray-600 mb-6">
+            Our support team is available to assist you with any questions or concerns.
+          </p>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="flex items-center">
+              <Mail className="w-6 h-6 text-green-600 mr-3" />
+              <div>
+                <div className="font-medium">Email Support</div>
+                <div className="text-gray-600">support@farmx.pk</div>
+              </div>
+            </div>
+            <div className="flex items-center">
+              <Phone className="w-6 h-6 text-green-600 mr-3" />
+              <div>
+                <div className="font-medium">Phone Support</div>
+                <div className="text-gray-600">+92 300 1234567</div>
               </div>
             </div>
           </div>
         </div>
-      </main>
-
-      <Footer />
-    </div>
+      </div>
+    </Layout>
   );
 };
 

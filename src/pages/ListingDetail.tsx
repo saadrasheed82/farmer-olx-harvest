@@ -26,7 +26,11 @@ const ListingDetail = () => {
         .select(`
           *,
           category:categories(*),
-          subcategory:subcategories(*)
+          subcategory:subcategories(*),
+          field_values:listing_field_values(
+            *,
+            field:category_fields(*)
+          )
         `)
         .eq('id', id)
         .single();
@@ -240,6 +244,20 @@ const ListingDetail = () => {
                     {listing.location_city}, {listing.location_province}
                   </span>
                 </div>
+
+                {/* Category-specific fields */}
+                {listing.field_values?.map((fieldValue) => (
+                  <div key={fieldValue.id}>
+                    <span className="text-gray-500">{fieldValue.field.field_label}:</span>
+                    <span className="ml-2 text-gray-900">
+                      {fieldValue.field.field_type === 'boolean' 
+                        ? (fieldValue.field_value ? 'Yes' : 'No')
+                        : fieldValue.field.field_type === 'date'
+                        ? format(new Date(fieldValue.field_value), 'MMM d, yyyy')
+                        : fieldValue.field_value}
+                    </span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

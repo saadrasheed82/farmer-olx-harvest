@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { useSearch } from '@/hooks/useSearch';
 import SearchSuggestions from './SearchSuggestions';
 import { useAuth } from '@/hooks/useAuth';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fadeIn, slideInLeft, slideInRight, slideUp } from '@/lib/animations';
 import {
@@ -20,6 +21,7 @@ const Header = () => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { user } = useAuth();
+  const { t } = useLanguage();
   
   // Add scroll effect
   useEffect(() => {
@@ -74,7 +76,7 @@ const Header = () => {
               whileHover={{ scale: 1.05 }}
             >
               <MapPin className="h-4 w-4 mr-1" />
-              Pakistan
+              {t('common.country')}
             </motion.span>
           </motion.div>
           <motion.div 
@@ -84,7 +86,7 @@ const Header = () => {
             <motion.div whileHover={{ scale: 1.05 }}>
               <Link to="/chat" className="flex items-center hover:text-green-200 transition-colors duration-200">
                 <MessageCircle className="h-4 w-4 mr-1" />
-                Chat
+                {t('common.chat')}
               </Link>
             </motion.div>
             {user ? (
@@ -92,7 +94,7 @@ const Header = () => {
                 <motion.div whileHover={{ scale: 1.05 }}>
                   <Link to="/settings" className="flex items-center hover:text-green-200 transition-colors duration-200">
                     <Settings className="h-4 w-4 mr-1" />
-                    Settings
+                    {t('common.settings')}
                   </Link>
                 </motion.div>
               </>
@@ -100,7 +102,7 @@ const Header = () => {
               <motion.div whileHover={{ scale: 1.05 }}>
                 <Link to="/login" className="flex items-center hover:text-green-200 transition-colors duration-200">
                   <User className="h-4 w-4 mr-1" />
-                  Login
+                  {t('common.login')}
                 </Link>
               </motion.div>
             )}
@@ -114,7 +116,7 @@ const Header = () => {
             whileTap={{ scale: 0.95 }}
           >
             <Link to="/" className="text-2xl font-bold text-white">
-              FarmX
+              {t('common.appName')}
             </Link>
           </motion.div>
 
@@ -127,7 +129,7 @@ const Header = () => {
             <div className="relative flex shadow-lg rounded-lg overflow-hidden">
               <Input
                 type="text"
-                placeholder="Find crops, livestock, equipment..."
+                placeholder={t('search.placeholder')}
                 className="flex-1 rounded-l-lg border-0 bg-white text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-green-500 transition-all duration-200"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -144,11 +146,11 @@ const Header = () => {
                   value={searchLocation}
                   onChange={(e) => setSearchLocation(e.target.value)}
                 >
-                  <option value="all">All Pakistan</option>
-                  <option value="Punjab">Punjab</option>
-                  <option value="Sindh">Sindh</option>
-                  <option value="KPK">KPK</option>
-                  <option value="Balochistan">Balochistan</option>
+                  <option value="all">{t('search.locations.all')}</option>
+                  <option value="Punjab">{t('search.locations.punjab')}</option>
+                  <option value="Sindh">{t('search.locations.sindh')}</option>
+                  <option value="KPK">{t('search.locations.kpk')}</option>
+                  <option value="Balochistan">{t('search.locations.balochistan')}</option>
                 </select>
               </div>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
@@ -196,7 +198,7 @@ const Header = () => {
                   <Link to="/sell">
                     <Button className="bg-yellow-500 hover:bg-yellow-600 text-gray-900 shadow-lg hover:shadow-xl transition-all duration-200">
                       <Plus className="h-4 w-4 mr-2" />
-                      Sell
+                      {t('common.sell')}
                     </Button>
                   </Link>
                 </motion.div>
@@ -210,12 +212,12 @@ const Header = () => {
                   <DropdownMenuContent align="end" className="w-48">
                     <DropdownMenuItem asChild>
                       <Link to="/my-listings" className="w-full">
-                        My Listings
+                        {t('common.myListings')}
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
                       <Link to="/settings" className="w-full">
-                        Settings
+                        {t('common.settings')}
                       </Link>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
@@ -225,7 +227,7 @@ const Header = () => {
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Link to="/auth">
                   <Button className="bg-yellow-500 hover:bg-yellow-600 text-gray-900 shadow-lg hover:shadow-xl transition-all duration-200">
-                    Sign In
+                    {t('common.signIn')}
                   </Button>
                 </Link>
               </motion.div>

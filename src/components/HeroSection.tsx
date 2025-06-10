@@ -1,11 +1,14 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Tractor, Wheat, Beef } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { fadeIn, slideUp, staggerContainer, slideInLeft, slideInRight } from '@/lib/animations';
+import { Search } from '@/components/Search';
 
 const HeroSection = () => {
+  const { t } = useLanguage();
+
   return (
     <motion.section 
       initial="hidden"
@@ -50,13 +53,13 @@ const HeroSection = () => {
             variants={slideUp}
             className="text-5xl md:text-6xl font-bold mb-6 leading-tight"
           >
-            Pakistan's #1 Farm Marketplace
+            {t('hero.title')}
           </motion.h1>
           <motion.p 
             variants={slideUp}
             className="text-xl mb-10 text-green-100"
           >
-            Buy and sell agricultural products, livestock, equipment, and land across Pakistan
+            {t('hero.description')}
           </motion.p>
           
           <motion.div 
@@ -69,7 +72,7 @@ const HeroSection = () => {
               className="flex items-center text-green-100 bg-green-800 bg-opacity-30 px-5 py-3 rounded-full"
             >
               <Beef className="h-8 w-8 mr-2" />
-              <span>Livestock</span>
+              <span>{t('hero.categories.livestock')}</span>
             </motion.div>
             <motion.div 
               variants={slideUp}
@@ -77,7 +80,7 @@ const HeroSection = () => {
               className="flex items-center text-green-100 bg-green-800 bg-opacity-30 px-5 py-3 rounded-full"
             >
               <Wheat className="h-8 w-8 mr-2" />
-              <span>Crops</span>
+              <span>{t('hero.categories.crops')}</span>
             </motion.div>
             <motion.div 
               variants={slideInRight}
@@ -85,7 +88,7 @@ const HeroSection = () => {
               className="flex items-center text-green-100 bg-green-800 bg-opacity-30 px-5 py-3 rounded-full"
             >
               <Tractor className="h-8 w-8 mr-2" />
-              <span>Equipment</span>
+              <span>{t('hero.categories.equipment')}</span>
             </motion.div>
           </motion.div>
 
@@ -101,7 +104,7 @@ const HeroSection = () => {
                 size="lg" 
                 className="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
               >
-                Start Buying
+                {t('hero.buttons.startBuying')}
                 <motion.div
                   animate={{ x: [0, 5, 0] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
@@ -119,10 +122,14 @@ const HeroSection = () => {
                 variant="outline" 
                 className="border-white text-white hover:bg-white hover:text-green-600 shadow-lg hover:shadow-xl transition-all duration-200"
               >
-                Post Your Ad
+                {t('hero.buttons.postAd')}
               </Button>
             </motion.div>
           </motion.div>
+
+          <div className="mt-8">
+            <Search />
+          </div>
         </motion.div>
       </div>
     </motion.section>

@@ -1,6 +1,5 @@
 import React from 'react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import Layout from '@/components/Layout';
 
 const Privacy = () => {
   const sections = [
@@ -63,56 +62,44 @@ const Privacy = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      
-      <main className="container mx-auto px-4 py-12">
-        <div className="max-w-3xl mx-auto">
-          <h1 className="text-4xl font-bold text-center mb-4">Privacy Policy</h1>
+    <Layout>
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-4xl font-bold text-center mb-8">Privacy Policy</h1>
+        
+        <div className="max-w-4xl mx-auto">
           <p className="text-gray-600 text-center mb-8">
             Last updated: March 15, 2024
           </p>
 
-          <div className="prose prose-green max-w-none">
-            <p className="text-gray-600 mb-8">
-              At FarmX, we take your privacy seriously. This Privacy Policy explains how we collect, use, 
-              disclose, and safeguard your information when you use our platform. Please read this policy 
-              carefully to understand our practices regarding your personal data.
-            </p>
+          <p className="text-gray-600 mb-8">
+            At FarmX, we take your privacy seriously. This Privacy Policy explains how we collect, use, and protect your personal information.
+          </p>
 
-            <div className="space-y-8">
-              {sections.map((section, index) => (
-                <section key={index} className="bg-white rounded-lg shadow-sm p-6">
-                  <h2 className="text-2xl font-semibold mb-4">{section.title}</h2>
-                  <ul className="space-y-2">
-                    {section.content.map((item, idx) => (
-                      <li key={idx} className="flex items-start">
-                        <div className="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3"></div>
-                        <span className="text-gray-600">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              ))}
+          {sections.map((section, index) => (
+            <div key={index} className="mb-8">
+              <h2 className="text-2xl font-semibold mb-4">{section.title}</h2>
+              <ul className="list-disc list-inside space-y-2 text-gray-700">
+                {section.content.map((item, i) => (
+                  <li key={i}>{item}</li>
+                ))}
+              </ul>
             </div>
+          ))}
 
-            <section className="mt-8">
-              <h2 className="text-2xl font-semibold mb-4">Contact Us</h2>
-              <p className="text-gray-600">
-                If you have any questions about this Privacy Policy, please contact us at:
-              </p>
-              <div className="bg-gray-50 p-4 rounded-lg mt-4">
-                <p className="text-gray-600">Email: privacy@farmx.pk</p>
-                <p className="text-gray-600">Phone: +92 300 1234567</p>
-                <p className="text-gray-600">Address: Office #123, Tech Hub, Lahore, Pakistan</p>
-              </div>
-            </section>
+          <div className="bg-gray-50 p-6 rounded-lg mt-8">
+            <h2 className="text-2xl font-semibold mb-4">Contact Us</h2>
+            <p className="text-gray-600 mb-4">
+              If you have any questions about our Privacy Policy, please contact us:
+            </p>
+            <div className="text-gray-600">
+              <p>Email: privacy@farmx.pk</p>
+              <p>Phone: +92 300 1234567</p>
+              <p>Address: Office #123, Tech Hub, Lahore, Pakistan</p>
+            </div>
           </div>
         </div>
-      </main>
-
-      <Footer />
-    </div>
+      </div>
+    </Layout>
   );
 };
 

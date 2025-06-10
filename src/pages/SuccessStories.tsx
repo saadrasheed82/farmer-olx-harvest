@@ -1,7 +1,6 @@
 import React from 'react';
 import { Star } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import Layout from '@/components/Layout';
 
 const SuccessStories = () => {
   const stories = [
@@ -40,56 +39,36 @@ const SuccessStories = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      
-      <main className="container mx-auto px-4 py-12">
-        <div className="max-w-5xl mx-auto">
-          <h1 className="text-4xl font-bold text-center mb-4">Success Stories</h1>
-          <p className="text-xl text-gray-600 text-center mb-12">
-            Real stories from farmers who transformed their agricultural business with FarmX
+    <Layout>
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-4xl font-bold text-center mb-8">Success Stories</h1>
+        
+        <div className="max-w-4xl mx-auto">
+          <p className="text-gray-600 text-center mb-8">
+            Read about how FarmX has helped farmers across Pakistan transform their agricultural businesses.
           </p>
 
-          <div className="space-y-12">
+          <div className="space-y-8">
             {stories.map((story, index) => (
               <div key={index} className="bg-white rounded-lg shadow-sm overflow-hidden">
                 <div className="md:flex">
-                  <div className="md:w-1/3 bg-gray-100">
-                    <div className="h-64 bg-gray-200">
-                      <img
-                        src={story.image}
-                        alt={story.name}
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          e.currentTarget.src = 'https://images.unsplash.com/photo-1560493676-04071c5f467b?w=800&h=600&fit=crop';
-                        }}
-                      />
-                    </div>
+                  <div className="md:w-1/3">
+                    <img
+                      src={story.image}
+                      alt={story.name}
+                      className="h-48 w-full object-cover md:h-full"
+                    />
                   </div>
-                  <div className="md:w-2/3 p-6">
-                    <div className="flex items-center mb-4">
-                      <h2 className="text-2xl font-semibold mr-4">{story.name}</h2>
-                      <div className="flex">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                        ))}
-                      </div>
+                  <div className="p-6 md:w-2/3">
+                    <div className="flex items-center mb-2">
+                      <h2 className="text-xl font-semibold">{story.name}</h2>
+                      <span className="text-sm text-gray-500 ml-2">• {story.location}</span>
                     </div>
-                    
-                    <div className="flex items-center text-gray-600 mb-4">
-                      <span className="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full mr-3">
-                        {story.category}
-                      </span>
-                      <span>{story.location}</span>
-                    </div>
-
-                    <p className="text-gray-600 mb-6 leading-relaxed">
-                      "{story.story}"
-                    </p>
-
-                    <div className="bg-green-50 p-4 rounded-lg">
-                      <div className="font-semibold text-green-800">Key Achievement:</div>
-                      <div className="text-green-700">{story.achievement}</div>
+                    <div className="text-sm text-green-600 mb-3">{story.category}</div>
+                    <p className="text-gray-600 mb-4">{story.story}</p>
+                    <div className="flex items-center text-yellow-500">
+                      <Star className="h-5 w-5 fill-current" />
+                      <span className="ml-2 text-gray-700 font-medium">{story.achievement}</span>
                     </div>
                   </div>
                 </div>
@@ -97,20 +76,18 @@ const SuccessStories = () => {
             ))}
           </div>
 
-          <div className="mt-12 bg-green-50 rounded-lg p-8 text-center">
-            <h2 className="text-2xl font-semibold mb-4">Share Your Success Story</h2>
-            <p className="text-gray-600 mb-6">
-              Have you achieved success using FarmX? We'd love to hear your story and share it with our community.
+          <div className="bg-green-50 p-6 rounded-lg mt-8 text-center">
+            <h2 className="text-2xl font-semibold mb-4">Share Your Story</h2>
+            <p className="text-gray-600 mb-4">
+              Have you found success using FarmX? We'd love to hear your story and share it with our community.
             </p>
-            <button className="bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors">
+            <button className="bg-green-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-700 transition-colors">
               Submit Your Story
             </button>
           </div>
         </div>
-      </main>
-
-      <Footer />
-    </div>
+      </div>
+    </Layout>
   );
 };
 

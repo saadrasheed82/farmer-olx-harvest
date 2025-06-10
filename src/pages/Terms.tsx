@@ -1,6 +1,5 @@
 import React from 'react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import Layout from '@/components/Layout';
 import { Link } from 'react-router-dom';
 
 const Terms = () => {
@@ -78,67 +77,48 @@ const Terms = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      
-      <main className="container mx-auto px-4 py-12">
+    <Layout>
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-4xl font-bold text-center mb-8">Terms of Service</h1>
+        
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl font-bold text-center mb-4">Terms of Service</h1>
-          <p className="text-gray-600 text-center mb-8">
-            Last updated: March 15, 2024
-          </p>
-
-          <div className="prose prose-green max-w-none">
-            <p className="text-gray-600 mb-8">
-              Welcome to FarmX. These Terms of Service ("Terms") govern your access to and use of the FarmX platform. 
-              Please read these Terms carefully before using our services.
-            </p>
-
-            <div className="space-y-8">
-              {sections.map((section, index) => (
-                <section key={index} className="bg-white rounded-lg shadow-sm p-6">
-                  <h2 className="text-2xl font-semibold mb-4">{section.title}</h2>
-                  {Array.isArray(section.content) ? (
-                    <ul className="space-y-2">
-                      {section.content.map((item, idx) => (
-                        <li key={idx} className="flex items-start">
-                          <div className="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3"></div>
-                          <span className="text-gray-600">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p className="text-gray-600">{section.content}</p>
-                  )}
-                </section>
-              ))}
+          {sections.map((section, index) => (
+            <div key={index} className="mb-8">
+              <h2 className="text-2xl font-semibold mb-4">{section.title}</h2>
+              {Array.isArray(section.content) ? (
+                <ul className="list-disc list-inside space-y-2 text-gray-700">
+                  {section.content.map((item, i) => (
+                    <li key={i}>{item}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-gray-700">{section.content}</p>
+              )}
             </div>
+          ))}
 
-            <section className="mt-8">
-              <h2 className="text-2xl font-semibold mb-4">Additional Information</h2>
-              <div className="bg-gray-50 p-6 rounded-lg">
-                <p className="text-gray-600 mb-4">
-                  For more information about how we handle your data, please read our{' '}
-                  <Link to="/privacy" className="text-green-600 hover:text-green-700">
-                    Privacy Policy
-                  </Link>.
-                </p>
-                <p className="text-gray-600 mb-4">
-                  If you have any questions about these Terms, please contact us at:
-                </p>
-                <div className="text-gray-600">
-                  <p>Email: legal@farmx.pk</p>
-                  <p>Phone: +92 300 1234567</p>
-                  <p>Address: Office #123, Tech Hub, Lahore, Pakistan</p>
-                </div>
+          <section className="mt-8">
+            <h2 className="text-2xl font-semibold mb-4">Additional Information</h2>
+            <div className="bg-gray-50 p-6 rounded-lg">
+              <p className="text-gray-600 mb-4">
+                For more information about how we handle your data, please read our{' '}
+                <Link to="/privacy" className="text-green-600 hover:text-green-700">
+                  Privacy Policy
+                </Link>.
+              </p>
+              <p className="text-gray-600 mb-4">
+                If you have any questions about these Terms, please contact us at:
+              </p>
+              <div className="text-gray-600">
+                <p>Email: legal@farmx.pk</p>
+                <p>Phone: +92 300 1234567</p>
+                <p>Address: Office #123, Tech Hub, Lahore, Pakistan</p>
               </div>
-            </section>
-          </div>
+            </div>
+          </section>
         </div>
-      </main>
-
-      <Footer />
-    </div>
+      </div>
+    </Layout>
   );
 };
 

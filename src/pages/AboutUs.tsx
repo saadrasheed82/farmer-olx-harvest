@@ -1,13 +1,10 @@
 import React from 'react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import Layout from '@/components/Layout';
 
 const AboutUs = () => {
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      
-      <main className="container mx-auto px-4 py-12">
+    <Layout>
+      <div className="container mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold text-center mb-8">About FarmX</h1>
         
         <div className="max-w-3xl mx-auto space-y-8">
@@ -65,10 +62,8 @@ const AboutUs = () => {
             </div>
           </section>
         </div>
-      </main>
-
-      <Footer />
-    </div>
+      </div>
+    </Layout>
   );
 };
 

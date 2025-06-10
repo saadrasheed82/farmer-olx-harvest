@@ -1,7 +1,6 @@
 import React from 'react';
 import { Calendar, User, Clock, ChevronRight } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import Layout from '@/components/Layout';
 import { Link } from 'react-router-dom';
 
 const Blog = () => {
@@ -60,112 +59,46 @@ const Blog = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      
-      <main className="container mx-auto px-4 py-12">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col md:flex-row gap-8">
-            {/* Main Content */}
-            <div className="md:w-2/3">
-              <h1 className="text-4xl font-bold mb-8">Agricultural Insights</h1>
-              
-              <div className="space-y-8">
-                {blogPosts.map((post) => (
-                  <article key={post.id} className="bg-white rounded-lg shadow-sm overflow-hidden">
-                    <div className="md:flex">
-                      <div className="md:w-1/3">
-                        <div className="h-48 md:h-full bg-gray-200">
-                          <img
-                            src={post.image}
-                            alt={post.title}
-                            className="w-full h-full object-cover"
-                            onError={(e) => {
-                              e.currentTarget.src = 'https://images.unsplash.com/photo-1560493676-04071c5f467b?w=800&h=600&fit=crop';
-                            }}
-                          />
-                        </div>
-                      </div>
-                      <div className="md:w-2/3 p-6">
-                        <div className="flex items-center text-sm text-gray-500 mb-2">
-                          <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full">
-                            {post.category}
-                          </span>
-                        </div>
-                        
-                        <h2 className="text-xl font-semibold mb-2">
-                          <Link to={`/blog/${post.id}`} className="hover:text-green-600 transition-colors">
-                            {post.title}
-                          </Link>
-                        </h2>
-                        
-                        <p className="text-gray-600 mb-4">
-                          {post.excerpt}
-                        </p>
-                        
-                        <div className="flex items-center text-sm text-gray-500 space-x-4">
-                          <div className="flex items-center">
-                            <User className="w-4 h-4 mr-1" />
-                            {post.author}
-                          </div>
-                          <div className="flex items-center">
-                            <Calendar className="w-4 h-4 mr-1" />
-                            {post.date}
-                          </div>
-                          <div className="flex items-center">
-                            <Clock className="w-4 h-4 mr-1" />
-                            {post.readTime}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </article>
-                ))}
+    <Layout>
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-4xl font-bold text-center mb-8">Blog</h1>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {blogPosts.map(post => (
+            <article key={post.id} className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-200">
+              <img src={post.image} alt={post.title} className="w-full h-48 object-cover" />
+              <div className="p-6">
+                <div className="text-sm text-green-600 mb-2">{post.category}</div>
+                <h2 className="text-xl font-semibold mb-2 hover:text-green-600 transition-colors duration-200">
+                  <Link to={`/blog/${post.id}`}>{post.title}</Link>
+                </h2>
+                <p className="text-gray-600 mb-4">{post.excerpt}</p>
+                <div className="flex items-center justify-between text-sm text-gray-500">
+                  <div className="flex items-center space-x-4">
+                    <span className="flex items-center">
+                      <User className="h-4 w-4 mr-1" />
+                      {post.author}
+                    </span>
+                    <span className="flex items-center">
+                      <Calendar className="h-4 w-4 mr-1" />
+                      {post.date}
+                    </span>
+                    <span className="flex items-center">
+                      <Clock className="h-4 w-4 mr-1" />
+                      {post.readTime}
+                    </span>
+                  </div>
+                  <Link to={`/blog/${post.id}`} className="flex items-center text-green-600 hover:text-green-700">
+                    Read more
+                    <ChevronRight className="h-4 w-4 ml-1" />
+                  </Link>
+                </div>
               </div>
-            </div>
-
-            {/* Sidebar */}
-            <div className="md:w-1/3">
-              {/* Categories */}
-              <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
-                <h2 className="text-xl font-semibold mb-4">Categories</h2>
-                <ul className="space-y-2">
-                  {categories.map((category, index) => (
-                    <li key={index}>
-                      <Link
-                        to={`/blog/category/${category.toLowerCase().replace(/\s+/g, '-')}`}
-                        className="flex items-center justify-between text-gray-600 hover:text-green-600 transition-colors"
-                      >
-                        {category}
-                        <ChevronRight className="w-4 h-4" />
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Newsletter Signup */}
-              <div className="bg-green-50 rounded-lg shadow-sm p-6">
-                <h2 className="text-xl font-semibold mb-4">Stay Updated</h2>
-                <p className="text-gray-600 mb-4">
-                  Subscribe to our newsletter for the latest farming tips and market insights.
-                </p>
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="w-full px-4 py-2 rounded-lg border border-gray-200 mb-4"
-                />
-                <button className="w-full bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition-colors">
-                  Subscribe
-                </button>
-              </div>
-            </div>
-          </div>
+            </article>
+          ))}
         </div>
-      </main>
-
-      <Footer />
-    </div>
+      </div>
+    </Layout>
   );
 };
 
