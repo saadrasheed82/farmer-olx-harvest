@@ -14,7 +14,7 @@ const HeroSection = () => {
       initial="hidden"
       animate="visible"
       variants={fadeIn}
-      className="bg-gradient-to-r from-green-700 to-green-600 text-white py-24 mt-16 relative overflow-hidden"
+      className="bg-gradient-to-r from-green-700 to-green-600 text-white py-24 mt-16 relative overflow-hidden backdrop-blur-sm"
     >
       {/* Background animated shapes */}
       <motion.div 
@@ -68,26 +68,41 @@ const HeroSection = () => {
           >
             <motion.div 
               variants={slideInLeft}
-              whileHover={{ scale: 1.1 }}
-              className="flex items-center text-green-100 bg-green-800 bg-opacity-30 px-5 py-3 rounded-full"
+              whileHover={{ scale: 1.1, y: -5 }}
+              className="flex items-center text-green-100 glass px-5 py-3 rounded-full shadow-lg hover:shadow-xl border border-white/20 hover-glow"
             >
-              <Beef className="h-8 w-8 mr-2" />
+              <motion.div
+                animate={{ rotate: [0, 10, 0] }}
+                transition={{ repeat: Infinity, duration: 3 }}
+              >
+                <Beef className="h-8 w-8 mr-2 text-yellow-300 animate-pulse-slow" />
+              </motion.div>
               <span>{t('hero.categories.livestock')}</span>
             </motion.div>
             <motion.div 
               variants={slideUp}
-              whileHover={{ scale: 1.1 }}
-              className="flex items-center text-green-100 bg-green-800 bg-opacity-30 px-5 py-3 rounded-full"
+              whileHover={{ scale: 1.1, y: -5 }}
+              className="flex items-center text-green-100 glass px-5 py-3 rounded-full shadow-lg hover:shadow-xl border border-white/20 hover-glow"
             >
-              <Wheat className="h-8 w-8 mr-2" />
+              <motion.div
+                animate={{ rotate: [0, -10, 0] }}
+                transition={{ repeat: Infinity, duration: 3, delay: 0.3 }}
+              >
+                <Wheat className="h-8 w-8 mr-2 text-yellow-300 animate-pulse-slow" />
+              </motion.div>
               <span>{t('hero.categories.crops')}</span>
             </motion.div>
             <motion.div 
               variants={slideInRight}
-              whileHover={{ scale: 1.1 }}
-              className="flex items-center text-green-100 bg-green-800 bg-opacity-30 px-5 py-3 rounded-full"
+              whileHover={{ scale: 1.1, y: -5 }}
+              className="flex items-center text-green-100 glass px-5 py-3 rounded-full shadow-lg hover:shadow-xl border border-white/20 hover-glow"
             >
-              <Tractor className="h-8 w-8 mr-2" />
+              <motion.div
+                animate={{ rotate: [0, 10, 0] }}
+                transition={{ repeat: Infinity, duration: 3, delay: 0.6 }}
+              >
+                <Tractor className="h-8 w-8 mr-2 text-yellow-300 animate-pulse-slow" />
+              </motion.div>
               <span>{t('hero.categories.equipment')}</span>
             </motion.div>
           </motion.div>
@@ -102,7 +117,7 @@ const HeroSection = () => {
             >
               <Button 
                 size="lg" 
-                className="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
+                className="glass-button bg-yellow-500/90 hover:bg-yellow-500 text-gray-900 font-semibold shadow-lg hover:shadow-yellow-500/50 transition-all duration-300 border border-yellow-400/50"
               >
                 {t('hero.buttons.startBuying')}
                 <motion.div
@@ -120,9 +135,14 @@ const HeroSection = () => {
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="border-white text-white hover:bg-white hover:text-green-600 shadow-lg hover:shadow-xl transition-all duration-200"
+                className="glass-button border-white/70 text-white hover:bg-white/20 shadow-lg hover:shadow-white/30 transition-all duration-300"
               >
-                {t('hero.buttons.postAd')}
+                <motion.span
+                  animate={{ scale: [1, 1.05, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  {t('hero.buttons.postAd')}
+                </motion.span>
               </Button>
             </motion.div>
           </motion.div>

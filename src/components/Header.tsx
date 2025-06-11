@@ -57,8 +57,8 @@ const Header = () => {
       initial="hidden"
       animate="visible"
       variants={fadeIn}
-      className={`fixed top-0 left-0 right-0 z-50 bg-green-600 text-white transition-all duration-300 ${
-        scrolled ? 'shadow-xl bg-opacity-95 backdrop-blur-sm' : 'shadow-lg'
+      className={`fixed top-0 left-0 right-0 z-50 text-white transition-all duration-300 ${
+        scrolled ? 'glass-dark bg-green-600/80 shadow-xl' : 'glass bg-green-600/90 shadow-lg'
       }`}
     >
       <div className="container mx-auto px-4">
@@ -126,11 +126,11 @@ const Header = () => {
             onSubmit={handleSubmit} 
             className="flex-1 max-w-2xl mx-8 relative"
           >
-            <div className="relative flex shadow-lg rounded-lg overflow-hidden">
+            <div className="relative flex shadow-xl rounded-lg overflow-hidden glass-input">
               <Input
                 type="text"
                 placeholder={t('search.placeholder')}
-                className="flex-1 rounded-l-lg border-0 bg-white text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-green-500 transition-all duration-200"
+                className="flex-1 rounded-l-lg border-0 bg-white/30 text-white placeholder-white/70 focus:ring-2 focus:ring-yellow-500/50 focus:bg-white/20 transition-all duration-200 backdrop-blur-md"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => setShowSuggestions(true)}
@@ -139,24 +139,28 @@ const Header = () => {
                   setTimeout(() => setShowSuggestions(false), 200);
                 }}
               />
-              <div className="flex items-center px-3 bg-white border-l">
-                <MapPin className="h-4 w-4 text-gray-500 mr-2" />
+              <div className="flex items-center px-3 bg-white/20 border-l border-white/30 backdrop-blur-md">
+                <MapPin className="h-4 w-4 text-white mr-2" />
                 <select 
-                  className="border-0 bg-transparent text-gray-700 text-sm focus:outline-none"
+                  className="border-0 bg-transparent text-white text-sm focus:outline-none"
                   value={searchLocation}
                   onChange={(e) => setSearchLocation(e.target.value)}
                 >
-                  <option value="all">{t('search.locations.all')}</option>
-                  <option value="Punjab">{t('search.locations.punjab')}</option>
-                  <option value="Sindh">{t('search.locations.sindh')}</option>
-                  <option value="KPK">{t('search.locations.kpk')}</option>
-                  <option value="Balochistan">{t('search.locations.balochistan')}</option>
+                  <option value="all" className="text-gray-800">{t('search.locations.all')}</option>
+                  <option value="Punjab" className="text-gray-800">{t('search.locations.punjab')}</option>
+                  <option value="Sindh" className="text-gray-800">{t('search.locations.sindh')}</option>
+                  <option value="KPK" className="text-gray-800">{t('search.locations.kpk')}</option>
+                  <option value="Balochistan" className="text-gray-800">{t('search.locations.balochistan')}</option>
                 </select>
               </div>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <motion.div 
+                whileHover={{ scale: 1.05 }} 
+                whileTap={{ scale: 0.95 }}
+                className="hover-glow"
+              >
                 <Button 
                   type="submit" 
-                  className="rounded-l-none bg-yellow-500 hover:bg-yellow-600 text-gray-900 transition-colors duration-200"
+                  className="rounded-l-none bg-yellow-500 hover:bg-yellow-600 text-gray-900 transition-all duration-200 shadow-lg hover:shadow-yellow-500/50"
                 >
                   <Search className="h-4 w-4" />
                 </Button>
@@ -196,8 +200,8 @@ const Header = () => {
               <>
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Link to="/sell">
-                    <Button className="bg-yellow-500 hover:bg-yellow-600 text-gray-900 shadow-lg hover:shadow-xl transition-all duration-200">
-                      <Plus className="h-4 w-4 mr-2" />
+                    <Button className="glass-button bg-yellow-500/90 hover:bg-yellow-500 text-gray-900 shadow-lg hover:shadow-yellow-500/50 transition-all duration-300">
+                      <Plus className="h-4 w-4 mr-2 animate-pulse-slow" />
                       {t('common.sell')}
                     </Button>
                   </Link>
@@ -226,7 +230,7 @@ const Header = () => {
             ) : (
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Link to="/auth">
-                  <Button className="bg-yellow-500 hover:bg-yellow-600 text-gray-900 shadow-lg hover:shadow-xl transition-all duration-200">
+                  <Button className="glass-button bg-yellow-500/90 hover:bg-yellow-500 text-gray-900 shadow-lg hover:shadow-yellow-500/50 transition-all duration-300">
                     {t('common.signIn')}
                   </Button>
                 </Link>

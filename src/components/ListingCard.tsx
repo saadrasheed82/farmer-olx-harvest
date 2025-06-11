@@ -65,89 +65,147 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, showEditButton = fal
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-200 overflow-hidden">
-      <div className="relative">
-        <img
+    <motion.div 
+      className="glass-card bg-white/90 rounded-lg overflow-hidden hover-lift"
+      whileHover={{ y: -5 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+    >
+      <div className="relative overflow-hidden">
+        <motion.img
           src={listing.images?.[0] || "https://images.unsplash.com/photo-1465379944081-7f47de8d74ac?w=400&h=300&fit=crop"}
           alt={listing.title}
-          className="w-full h-48 object-cover"
+          className="w-full h-48 object-cover transition-transform duration-700"
+          whileHover={{ scale: 1.1 }}
         />
-        <span className={`absolute top-2 left-2 ${statusColors[listing.status]} text-white px-2 py-1 text-xs font-semibold rounded`}>
+        <motion.span 
+          className={`absolute top-2 left-2 ${statusColors[listing.status]} text-white px-2 py-1 text-xs font-semibold rounded-full backdrop-blur-sm shadow-md`}
+          whileHover={{ scale: 1.1 }}
+          animate={{ y: [0, -3, 0] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+        >
           {listing.status.toUpperCase()}
-        </span>
+        </motion.span>
       </div>
 
-      <div className="p-4">
+      <div className="p-4 backdrop-blur-sm">
         <div className="flex justify-between items-start mb-2">
-          <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">
+          <motion.span 
+            className="text-xs bg-green-100/80 text-green-700 px-2 py-1 rounded-full glass-button"
+            whileHover={{ scale: 1.1 }}
+          >
             {listing.category?.name}
-          </span>
-          <span className="text-lg font-bold text-green-600">
+          </motion.span>
+          <motion.span 
+            className="text-lg font-bold text-green-600 bg-green-50/50 px-3 py-1 rounded-full glass"
+            whileHover={{ scale: 1.05, rotate: 1 }}
+            animate={{ y: [0, -2, 0] }}
+            transition={{ repeat: Infinity, duration: 2 }}
+          >
             Rs {listing.price?.toLocaleString()}
-          </span>
+          </motion.span>
         </div>
 
         <Link to={`/listing/${listing.id}`}>
-          <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2 hover:text-green-600 transition-colors">
+          <motion.h3 
+            className="font-semibold text-gray-900 mb-2 line-clamp-2 hover:text-green-600 transition-colors"
+            whileHover={{ x: 5 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
             {listing.title}
-          </h3>
+          </motion.h3>
         </Link>
 
-        <div className="flex items-center text-sm text-gray-500 mb-2">
-          <MapPin className="h-4 w-4 mr-1" />
+        <motion.div 
+          className="flex items-center text-sm text-gray-500 mb-2"
+          whileHover={{ x: 5 }}
+          transition={{ type: "spring", stiffness: 300 }}
+        >
+          <motion.div
+            animate={{ rotate: [0, 5, 0] }}
+            transition={{ repeat: Infinity, duration: 3 }}
+          >
+            <MapPin className="h-4 w-4 mr-1 text-green-500" />
+          </motion.div>
           {listing.location_city}, {listing.location_province}
-        </div>
+        </motion.div>
 
-        <div className="flex items-center text-xs text-gray-400 mb-4">
-          <Calendar className="h-3 w-3 mr-1" />
+        <motion.div 
+          className="flex items-center text-xs text-gray-400 mb-4"
+          whileHover={{ x: 5 }}
+          transition={{ type: "spring", stiffness: 300 }}
+        >
+          <motion.div
+            animate={{ rotate: [0, 10, 0] }}
+            transition={{ repeat: Infinity, duration: 3, delay: 0.5 }}
+          >
+            <Calendar className="h-3 w-3 mr-1 text-green-400" />
+          </motion.div>
           {format(new Date(listing.created_at), 'MMM d, yyyy')}
-        </div>
+        </motion.div>
 
         {showEditButton && (
           <div className="flex gap-2">
             <Link to={`/edit-listing/${listing.id}`} className="flex-1">
-              <Button 
-                variant="outline" 
-                size="sm"
-                className="w-full"
-              >
-                <Edit className="h-4 w-4 mr-1" />
-                Edit
-              </Button>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  className="w-full glass-button bg-green-50/50 border-green-200/50 hover:bg-green-100/50"
+                >
+                  <motion.div
+                    animate={{ rotate: [0, 10, 0] }}
+                    transition={{ repeat: Infinity, duration: 3 }}
+                  >
+                    <Edit className="h-4 w-4 mr-1 text-green-600" />
+                  </motion.div>
+                  Edit
+                </Button>
+              </motion.div>
             </Link>
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button
-                  variant="outline" 
-                  size="sm" 
-                  className="flex-1 text-red-600 hover:text-red-700"
-                >
-                  <Trash2 className="h-4 w-4 mr-1" />
-                  Delete
-                </Button>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex-1">
+                  <Button
+                    variant="outline" 
+                    size="sm" 
+                    className="w-full glass-button bg-red-50/50 border-red-200/50 hover:bg-red-100/50 text-red-600 hover:text-red-700"
+                  >
+                    <motion.div
+                      animate={{ rotate: [0, -10, 0] }}
+                      transition={{ repeat: Infinity, duration: 3 }}
+                    >
+                      <Trash2 className="h-4 w-4 mr-1" />
+                    </motion.div>
+                    Delete
+                  </Button>
+                </motion.div>
               </AlertDialogTrigger>
-              <AlertDialogContent>
+              <AlertDialogContent className="glass-card border-red-200/50 backdrop-blur-md">
                 <AlertDialogHeader>
-                  <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                  <AlertDialogTitle className="text-red-600">Are you sure?</AlertDialogTitle>
                   <AlertDialogDescription>
                     This action cannot be undone. This will permanently delete your listing.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction 
-                    onClick={handleDelete}
-                    className="bg-red-600 hover:bg-red-700"
-                  >
-                    Delete
-                  </AlertDialogAction>
+                  <AlertDialogCancel className="glass-button">Cancel</AlertDialogCancel>
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <AlertDialogAction 
+                      onClick={handleDelete}
+                      className="bg-red-600 hover:bg-red-700 hover-glow"
+                    >
+                      Delete
+                    </AlertDialogAction>
+                  </motion.div>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
           </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
