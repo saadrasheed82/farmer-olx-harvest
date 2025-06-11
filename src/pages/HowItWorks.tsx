@@ -50,11 +50,11 @@ const HowItWorks = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       <main className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl font-bold text-center mb-8">How FarmX Works</h1>
-          
+          <h1 className="text-4xl font-bold text-center mb-8">How Kisan Markaz Works</h1>
+
           <p className="text-xl text-gray-600 text-center mb-12">
             Your one-stop platform for buying and selling agricultural products in Pakistan
           </p>
@@ -86,7 +86,7 @@ const HowItWorks = () => {
           <div className="mt-12 bg-green-50 rounded-lg p-8 text-center">
             <h2 className="text-2xl font-semibold mb-4">Ready to Get Started?</h2>
             <p className="text-gray-600 mb-6">
-              Join thousands of farmers and buyers already using FarmX to grow their agricultural business.
+              Join thousands of farmers and buyers already using Kisan Markaz to grow their agricultural business.
             </p>
             <button className="bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors">
               Create Your Account

@@ -6,7 +6,7 @@ const Terms = () => {
   const sections = [
     {
       title: "Acceptance of Terms",
-      content: `By accessing or using FarmX, you agree to be bound by these Terms of Service. If you disagree with any part of the terms, you may not access the service.`
+      content: `By accessing or using Kisan Markaz, you agree to be bound by these Terms of Service. If you disagree with any part of the terms, you may not access the service.`
     },
     {
       title: "User Registration",
@@ -51,7 +51,7 @@ const Terms = () => {
       title: "Content Ownership",
       content: [
         "You retain rights to content you post",
-        "You grant FarmX license to use your content",
+        "You grant Kisan Markaz license to use your content",
         "You must not violate others' intellectual property rights",
         "We may remove content that violates these terms"
       ]
@@ -80,42 +80,36 @@ const Terms = () => {
     <Layout>
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold text-center mb-8">Terms of Service</h1>
-        
-        <div className="max-w-4xl mx-auto">
-          {sections.map((section, index) => (
-            <div key={index} className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4">{section.title}</h2>
-              {Array.isArray(section.content) ? (
-                <ul className="list-disc list-inside space-y-2 text-gray-700">
-                  {section.content.map((item, i) => (
-                    <li key={i}>{item}</li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="text-gray-700">{section.content}</p>
-              )}
-            </div>
-          ))}
 
-          <section className="mt-8">
-            <h2 className="text-2xl font-semibold mb-4">Additional Information</h2>
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <p className="text-gray-600 mb-4">
-                For more information about how we handle your data, please read our{' '}
-                <Link to="/privacy" className="text-green-600 hover:text-green-700">
-                  Privacy Policy
-                </Link>.
-              </p>
-              <p className="text-gray-600 mb-4">
-                If you have any questions about these Terms, please contact us at:
-              </p>
-              <div className="text-gray-600">
-                <p>Email: legal@farmx.pk</p>
-                <p>Phone: +92 300 1234567</p>
-                <p>Address: Office #123, Tech Hub, Lahore, Pakistan</p>
-              </div>
-            </div>
-          </section>
+        <div className="max-w-3xl mx-auto prose prose-lg">
+          <p>
+            Welcome to Kisan Markaz. By accessing or using our website and services, you agree to be bound by these Terms of Service.
+          </p>
+
+          <h2>1. Acceptance of Terms</h2>
+          <p>
+            By accessing and using Kisan Markaz, you accept and agree to be bound by the terms and provisions of this agreement.
+          </p>
+
+          <h2>2. User Accounts</h2>
+          <p>
+            To use certain features of Kisan Markaz, you must register for an account. You agree to provide accurate and complete information when creating your account and to update such information to keep it accurate and current.
+          </p>
+
+          <h2>3. Listing Guidelines</h2>
+          <p>
+            When creating listings on Kisan Markaz, you agree to provide accurate information about your agricultural products or services. All listings must comply with local laws and regulations.
+          </p>
+
+          <h2>4. Privacy Policy</h2>
+          <p>
+            Your use of Kisan Markaz is also governed by our Privacy Policy. Please review our Privacy Policy, which also governs the site and informs users of our data collection practices.
+          </p>
+
+          <h2>5. Contact</h2>
+          <p>
+            If you have any questions about these Terms, please contact us at legal@kisanmarkaz.pk
+          </p>
         </div>
       </div>
     </Layout>

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Eye, EyeOff, Facebook, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -15,20 +14,21 @@ const Login = () => {
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center text-green-600 hover:text-green-700 mb-4">
-            <ArrowLeft className="h-4 w-4 mr-1" />
-            Back to FarmX
-          </Link>
-          <h1 className="text-3xl font-bold text-gray-900">Welcome to FarmX</h1>
-          <p className="text-gray-600 mt-2">Join Pakistan's largest farming community</p>
+          <Button variant="ghost" asChild>
+            <Link to="/">Back to Kisan Markaz</Link>
+          </Button>
+          <div className="text-center">
+            <h1 className="text-3xl font-bold text-gray-900">Welcome to Kisan Markaz</h1>
+            <p className="mt-2 text-gray-600">Sign in to your account</p>
+          </div>
         </div>
 
         <Card>
           <CardHeader>
             <CardTitle>{isLogin ? 'Login' : 'Sign Up'}</CardTitle>
             <CardDescription>
-              {isLogin 
-                ? 'Enter your credentials to access your account' 
+              {isLogin
+                ? 'Enter your credentials to access your account'
                 : 'Create an account to start buying and selling'
               }
             </CardDescription>
@@ -56,7 +56,7 @@ const Login = () => {
                   Password
                 </label>
                 <div className="relative">
-                  <Input 
+                  <Input
                     type={showPassword ? 'text' : 'password'}
                     placeholder="Enter your password"
                   />

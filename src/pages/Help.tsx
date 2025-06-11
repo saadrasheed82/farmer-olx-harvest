@@ -41,8 +41,8 @@ const Help = () => {
         answer: "Click the 'Contact Seller' button on any listing to send a message. You can discuss details, price, and arrange the transaction through our messaging system."
       },
       {
-        question: "What payment methods are accepted?",
-        answer: "FarmX supports various payment methods including bank transfers, cash on delivery, and digital payments. Specific payment terms are agreed between buyers and sellers."
+        question: "What payment methods are supported?",
+        answer: "Kisan Markaz supports various payment methods including bank transfers, cash on delivery, and digital payments. Specific payment terms are agreed between buyers and sellers."
       }
     ],
     'Safety & Security': [
@@ -51,8 +51,8 @@ const Help = () => {
         answer: "Click the 'Report' button on the listing page, select the reason for reporting, and provide additional details. Our team will review and take appropriate action."
       },
       {
-        question: "How does FarmX protect my information?",
-        answer: "We use industry-standard security measures to protect your data. Read our Privacy Policy for detailed information about data protection."
+        question: "How does Kisan Markaz protect my information?",
+        answer: "We use industry-standard security measures to protect your personal and business information. All transactions and communications are encrypted, and we never share your data with unauthorized parties."
       },
       {
         question: "What should I do if I encounter a scam?",
@@ -77,15 +77,15 @@ const Help = () => {
 
   const filteredFaqs: FAQCategories = searchQuery
     ? Object.fromEntries(
-        Object.entries(faqs).map(([category, questions]) => [
-          category,
-          questions.filter(
-            q =>
-              q.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              q.answer.toLowerCase().includes(searchQuery.toLowerCase())
-          )
-        ]).filter(([_, questions]) => questions.length > 0)
-      )
+      Object.entries(faqs).map(([category, questions]) => [
+        category,
+        questions.filter(
+          q =>
+            q.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            q.answer.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      ]).filter(([_, questions]) => questions.length > 0)
+    )
     : faqs;
 
   return (
@@ -130,7 +130,7 @@ const Help = () => {
         {/* FAQs */}
         <div className="space-y-6">
           <h2 className="text-2xl font-semibold mb-6">Frequently Asked Questions</h2>
-          
+
           {Object.entries(filteredFaqs).map(([category, questions]) => (
             questions.length > 0 && (
               <div key={category} className="bg-white rounded-lg shadow-sm overflow-hidden">
@@ -140,12 +140,11 @@ const Help = () => {
                 >
                   {category}
                   <ChevronDown
-                    className={`w-5 h-5 transition-transform ${
-                      openSection === category ? 'transform rotate-180' : ''
-                    }`}
+                    className={`w-5 h-5 transition-transform ${openSection === category ? 'transform rotate-180' : ''
+                      }`}
                   />
                 </button>
-                
+
                 {openSection === category && (
                   <div className="px-6 pb-4">
                     <div className="space-y-4">
@@ -174,7 +173,7 @@ const Help = () => {
               <Mail className="w-6 h-6 text-green-600 mr-3" />
               <div>
                 <div className="font-medium">Email Support</div>
-                <div className="text-gray-600">support@farmx.pk</div>
+                <div className="text-gray-600">support@kisanmarkaz.pk</div>
               </div>
             </div>
             <div className="flex items-center">

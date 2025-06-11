@@ -65,38 +65,43 @@ const Privacy = () => {
     <Layout>
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold text-center mb-8">Privacy Policy</h1>
-        
-        <div className="max-w-4xl mx-auto">
-          <p className="text-gray-600 text-center mb-8">
-            Last updated: March 15, 2024
+
+        <div className="max-w-3xl mx-auto prose prose-lg">
+          <p>
+            At Kisan Markaz, we take your privacy seriously. This Privacy Policy explains how we collect, use, and protect your personal information.
           </p>
 
-          <p className="text-gray-600 mb-8">
-            At FarmX, we take your privacy seriously. This Privacy Policy explains how we collect, use, and protect your personal information.
+          <h2>1. Information We Collect</h2>
+          <p>
+            When you use Kisan Markaz, we collect information that you provide directly to us, including:
+          </p>
+          <ul>
+            <li>Name and contact information</li>
+            <li>Account credentials</li>
+            <li>Listing information</li>
+            <li>Transaction data</li>
+          </ul>
+
+          <h2>2. How We Use Your Information</h2>
+          <p>
+            We use the information we collect to:
+          </p>
+          <ul>
+            <li>Provide and improve Kisan Markaz services</li>
+            <li>Process your transactions</li>
+            <li>Communicate with you about your account</li>
+            <li>Send you updates and marketing communications</li>
+          </ul>
+
+          <h2>3. Information Security</h2>
+          <p>
+            Kisan Markaz implements appropriate security measures to protect your personal information from unauthorized access or disclosure.
           </p>
 
-          {sections.map((section, index) => (
-            <div key={index} className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4">{section.title}</h2>
-              <ul className="list-disc list-inside space-y-2 text-gray-700">
-                {section.content.map((item, i) => (
-                  <li key={i}>{item}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
-
-          <div className="bg-gray-50 p-6 rounded-lg mt-8">
-            <h2 className="text-2xl font-semibold mb-4">Contact Us</h2>
-            <p className="text-gray-600 mb-4">
-              If you have any questions about our Privacy Policy, please contact us:
-            </p>
-            <div className="text-gray-600">
-              <p>Email: privacy@farmx.pk</p>
-              <p>Phone: +92 300 1234567</p>
-              <p>Address: Office #123, Tech Hub, Lahore, Pakistan</p>
-            </div>
-          </div>
+          <h2>4. Contact Us</h2>
+          <p>
+            If you have any questions about our Privacy Policy, please contact us at privacy@kisanmarkaz.pk
+          </p>
         </div>
       </div>
     </Layout>

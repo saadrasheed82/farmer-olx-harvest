@@ -9,14 +9,18 @@
     "cancel": "Cancel",
     "success": "Success",
     "error": "Error",
-    "appName": "FarmX",
+    "appName": "Kisan Markaz",
     "country": "Pakistan",
     "chat": "Chat",
     "login": "Login",
     "signIn": "Sign In",
     "sell": "Sell",
     "myListings": "My Listings",
-    "favorites": "Favorites"
+    "favorites": "Favorites",
+    "loading": "Loading...",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View"
   },
   "hero": {
     "title": "Pakistan's #1 Agricultural Marketplace",
@@ -42,7 +46,7 @@
     }
   },
   "footer": {
-    "description": "Pakistan's largest agricultural marketplace connecting farmers across the country.",
+    "description": "Pakistan's leading agricultural marketplace connecting farmers with buyers.",
     "quickLinks": {
       "title": "Quick Links",
       "about": "About Us",
@@ -59,11 +63,11 @@
     },
     "contact": {
       "title": "Contact",
-      "email": "support@farmx.pk",
+      "email": "support@kisanmarkaz.pk",
       "phone": "+92 300 1234567",
-      "address": "Islamabad, Pakistan"
+      "address": "Lahore, Pakistan"
     },
-    "copyright": "© 2024 FarmX. All rights reserved."
+    "copyright": "© 2024 Kisan Markaz. All rights reserved."
   },
   "settings": {
     "language": "Language",
@@ -94,4 +98,4 @@
       "updateError": "Failed to update preferences."
     }
   }
-} 
+}

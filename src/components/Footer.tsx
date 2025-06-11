@@ -76,12 +76,12 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold text-white mb-4 animate-pulse-slow">{t('footer.contact.title')}</h4>
             <ul className="space-y-3 text-sm">
-              <motion.li 
+              <motion.li
                 className="flex items-center"
                 whileHover={{ scale: 1.03, x: 5 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <motion.div 
+                <motion.div
                   className="bg-green-600/30 p-2 rounded-full mr-3 glass"
                   whileHover={{ rotate: 10 }}
                   animate={{ y: [0, -2, 0] }}
@@ -91,12 +91,12 @@ const Footer = () => {
                 </motion.div>
                 {t('footer.contact.email')}
               </motion.li>
-              <motion.li 
+              <motion.li
                 className="flex items-center"
                 whileHover={{ scale: 1.03, x: 5 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <motion.div 
+                <motion.div
                   className="bg-green-600/30 p-2 rounded-full mr-3 glass"
                   whileHover={{ rotate: -10 }}
                   animate={{ y: [0, -2, 0] }}
@@ -106,12 +106,12 @@ const Footer = () => {
                 </motion.div>
                 {t('footer.contact.phone')}
               </motion.li>
-              <motion.li 
+              <motion.li
                 className="flex items-center"
                 whileHover={{ scale: 1.03, x: 5 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <motion.div 
+                <motion.div
                   className="bg-green-600/30 p-2 rounded-full mr-3 glass"
                   whileHover={{ rotate: 10 }}
                   animate={{ y: [0, -2, 0] }}
@@ -128,7 +128,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 mt-8 pt-8 text-sm glass-dark rounded-lg p-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <motion.p 
+            <motion.p
               className="hover-lift"
               whileHover={{ scale: 1.05 }}
               animate={{ opacity: [0.8, 1, 0.8] }}

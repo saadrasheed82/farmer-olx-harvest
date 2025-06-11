@@ -22,7 +22,7 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const { user } = useAuth();
   const { t } = useLanguage();
-  
+
   // Add scroll effect
   useEffect(() => {
     const handleScroll = () => {
@@ -53,25 +53,24 @@ const Header = () => {
   };
 
   return (
-    <motion.header 
+    <motion.header
       initial="hidden"
       animate="visible"
       variants={fadeIn}
-      className={`fixed top-0 left-0 right-0 z-50 text-white transition-all duration-300 ${
-        scrolled ? 'glass-dark bg-green-600/80 shadow-xl' : 'glass bg-green-600/90 shadow-lg'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 text-white transition-all duration-300 ${scrolled ? 'glass-dark bg-green-600/80 shadow-xl' : 'glass bg-green-600/90 shadow-lg'
+        }`}
     >
       <div className="container mx-auto px-4">
         {/* Top bar */}
-        <motion.div 
+        <motion.div
           variants={slideUp}
           className="flex items-center justify-between py-2 text-sm border-b border-green-500"
         >
-          <motion.div 
+          <motion.div
             variants={slideInLeft}
             className="flex items-center space-x-4"
           >
-            <motion.span 
+            <motion.span
               className="flex items-center"
               whileHover={{ scale: 1.05 }}
             >
@@ -79,7 +78,7 @@ const Header = () => {
               {t('common.country')}
             </motion.span>
           </motion.div>
-          <motion.div 
+          <motion.div
             variants={slideInRight}
             className="flex items-center space-x-4"
           >
@@ -121,9 +120,9 @@ const Header = () => {
           </motion.div>
 
           {/* Search bar */}
-          <motion.form 
+          <motion.form
             variants={fadeIn}
-            onSubmit={handleSubmit} 
+            onSubmit={handleSubmit}
             className="flex-1 max-w-2xl mx-8 relative"
           >
             <div className="relative flex shadow-xl rounded-lg overflow-hidden glass-input">
@@ -141,7 +140,7 @@ const Header = () => {
               />
               <div className="flex items-center px-3 bg-white/20 border-l border-white/30 backdrop-blur-md">
                 <MapPin className="h-4 w-4 text-white mr-2" />
-                <select 
+                <select
                   className="border-0 bg-transparent text-white text-sm focus:outline-none"
                   value={searchLocation}
                   onChange={(e) => setSearchLocation(e.target.value)}
@@ -153,20 +152,20 @@ const Header = () => {
                   <option value="Balochistan" className="text-gray-800">{t('search.locations.balochistan')}</option>
                 </select>
               </div>
-              <motion.div 
-                whileHover={{ scale: 1.05 }} 
+              <motion.div
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="hover-glow"
               >
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   className="rounded-l-none bg-yellow-500 hover:bg-yellow-600 text-gray-900 transition-all duration-200 shadow-lg hover:shadow-yellow-500/50"
                 >
                   <Search className="h-4 w-4" />
                 </Button>
               </motion.div>
             </div>
-            
+
             <AnimatePresence>
               {showSuggestions && (
                 <motion.div
@@ -185,7 +184,7 @@ const Header = () => {
           </motion.form>
 
           {/* Action buttons */}
-          <motion.div 
+          <motion.div
             variants={slideInRight}
             className="flex items-center space-x-4"
           >
