@@ -491,12 +491,32 @@ const Sell = () => {
               <label htmlFor="location_city" className="block text-sm font-medium text-gray-700 mb-2">
                 Location
               </label>
-              <Input
-                id="location_city"
-                {...register('location_city')}
-                placeholder="Enter your location"
-                className={errors.location_city ? 'border-red-500' : ''}
-              />
+              <div className="space-y-4">
+                <Input
+                  id="location_city"
+                  {...register('location_city')}
+                  placeholder="City"
+                  className={errors.location_city ? 'border-red-500' : ''}
+                />
+                <Select
+                  onValueChange={(value) => setValue('location_province', value)}
+                  defaultValue={watch('location_province')}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select province" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Punjab">Punjab</SelectItem>
+                    <SelectItem value="Sindh">Sindh</SelectItem>
+                    <SelectItem value="KPK">KPK</SelectItem>
+                    <SelectItem value="Balochistan">Balochistan</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Input
+                  {...register('location_address')}
+                  placeholder="Detailed address"
+                />
+              </div>
               {errors.location_city && (
                 <p className="mt-1 text-sm text-red-500">{errors.location_city.message}</p>
               )}

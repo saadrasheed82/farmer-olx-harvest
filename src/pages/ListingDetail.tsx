@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { MapPin, Calendar, ArrowLeft, Phone, Mail, Heart } from 'lucide-react';
+import { MapPin, Calendar, ArrowLeft, Phone, Mail, Heart, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { format } from 'date-fns';
 import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
@@ -16,6 +16,7 @@ const ListingDetail = () => {
   const { user } = useAuth();
   const { data: favorites } = useFavorites();
   const toggleFavorite = useToggleFavorite();
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
 
   const { data: listing, isLoading } = useQuery({
     queryKey: ['listing', id],
@@ -66,11 +67,35 @@ const ListingDetail = () => {
     });
   };
 
+  const handlePrevImage = () => {
+    if (selectedImageIndex === null || !listing?.images) return;
+    setSelectedImageIndex((selectedImageIndex - 1 + listing.images.length) % listing.images.length);
+  };
+
+  const handleNextImage = () => {
+    if (selectedImageIndex === null || !listing?.images) return;
+    setSelectedImageIndex((selectedImageIndex + 1) % listing.images.length);
+  };
+
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (selectedImageIndex === null) return;
+    if (e.key === 'ArrowLeft') handlePrevImage();
+    if (e.key === 'ArrowRight') handleNextImage();
+    if (e.key === 'Escape') setSelectedImageIndex(null);
+  };
+
+  React.useEffect(() => {
+    if (selectedImageIndex !== null) {
+      window.addEventListener('keydown', handleKeyDown);
+      return () => window.removeEventListener('keydown', handleKeyDown);
+    }
+  }, [selectedImageIndex]);
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background">
         <Header />
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-4 py-8 mt-16">
           <div className="animate-pulse">
             <div className="h-96 bg-gray-200 rounded-lg mb-8"></div>
             <div className="h-8 bg-gray-200 w-3/4 rounded mb-4"></div>
@@ -87,7 +112,7 @@ const ListingDetail = () => {
     return (
       <div className="min-h-screen bg-background">
         <Header />
-        <div className="container mx-auto px-4 py-16 text-center">
+        <div className="container mx-auto px-4 py-16 mt-16 text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Listing Not Found</h1>
           <p className="text-gray-600 mb-8">The listing you're looking for doesn't exist or has been removed.</p>
           <Link to="/">
@@ -112,11 +137,27 @@ const ListingDetail = () => {
           <div className="lg:w-2/3">
             {/* Image Gallery */}
             <div className="bg-white rounded-lg shadow-sm overflow-hidden mb-8">
-              <img
-                src={listing.images?.[0] || "https://images.unsplash.com/photo-1465379944081-7f47de8d74ac?w=800&h=600&fit=crop"}
-                alt={listing.title}
-                className="w-full h-96 object-cover"
-              />
+              <div className="relative">
+                <img
+                  src={listing.images?.[0] || "https://images.unsplash.com/photo-1465379944081-7f47de8d74ac?w=800&h=600&fit=crop"}
+                  alt={listing.title}
+                  className="w-full h-96 object-cover cursor-pointer"
+                  onClick={() => setSelectedImageIndex(0)}
+                />
+                {listing.images && listing.images.length > 1 && (
+                  <div className="grid grid-cols-4 gap-2 mt-2 p-2">
+                    {listing.images.slice(1).map((image, index) => (
+                      <img
+                        key={index + 1}
+                        src={image}
+                        alt={`${listing.title} - Image ${index + 2}`}
+                        className="w-full h-24 object-cover rounded cursor-pointer hover:opacity-80 transition-opacity"
+                        onClick={() => setSelectedImageIndex(index + 1)}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Listing Details */}
@@ -306,6 +347,60 @@ const ListingDetail = () => {
           </div>
         </div>
       </div>
+
+      {/* Image Modal */}
+      {selectedImageIndex !== null && listing.images && (
+        <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center"
+             onClick={() => setSelectedImageIndex(null)}>
+          <div className="relative max-w-7xl mx-auto px-4 py-8">
+            <button
+              className="absolute top-4 right-4 text-white hover:text-gray-300"
+              onClick={() => setSelectedImageIndex(null)}
+            >
+              <X className="h-8 w-8" />
+            </button>
+            
+            <img
+              src={listing.images[selectedImageIndex]}
+              alt={`${listing.title} - Image ${selectedImageIndex + 1}`}
+              className="max-h-[80vh] w-auto mx-auto"
+              onClick={(e) => e.stopPropagation()}
+            />
+
+            {listing.images.length > 1 && (
+              <>
+                <button
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300"
+                  onClick={(e) => { e.stopPropagation(); handlePrevImage(); }}
+                >
+                  <ChevronLeft className="h-12 w-12" />
+                </button>
+                <button
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300"
+                  onClick={(e) => { e.stopPropagation(); handleNextImage(); }}
+                >
+                  <ChevronRight className="h-12 w-12" />
+                </button>
+              </>
+            )}
+
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+              {listing.images.map((_, index) => (
+                <button
+                  key={index}
+                  className={`w-2 h-2 rounded-full ${
+                    index === selectedImageIndex ? 'bg-white' : 'bg-gray-500'
+                  }`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedImageIndex(index);
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </div>
