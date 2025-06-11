@@ -115,3 +115,45 @@ export const pageTransition: Variants = {
     transition: { duration: 0.2 }
   }
 };
+
+// Cursor animations with high contrast against green and white
+export const cursorVariants = {
+  default: {
+    width: 30,
+    height: 30,
+    backgroundColor: 'rgba(128, 0, 128, 0.4)', // Purple (contrasts with both green and white)
+    border: '3px solid rgba(128, 0, 128, 0.9)',
+    boxShadow: '0 0 15px rgba(128, 0, 128, 0.8), 0 0 30px rgba(128, 0, 128, 0.4)',
+  },
+  link: {
+    width: 45,
+    height: 45,
+    backgroundColor: 'rgba(255, 69, 0, 0.4)', // Orange-red (contrasts with green)
+    border: '3px solid rgba(255, 69, 0, 0.9)',
+    boxShadow: '0 0 20px rgba(255, 69, 0, 0.8), 0 0 40px rgba(255, 69, 0, 0.4)',
+  },
+  button: {
+    width: 40,
+    height: 40,
+    backgroundColor: 'rgba(220, 20, 60, 0.4)', // Crimson (contrasts with green and white)
+    border: '3px solid rgba(220, 20, 60, 0.9)',
+    boxShadow: '0 0 20px rgba(220, 20, 60, 0.8), 0 0 40px rgba(220, 20, 60, 0.4)',
+  },
+  input: {
+    width: 35,
+    height: 35,
+    backgroundColor: 'rgba(75, 0, 130, 0.4)', // Indigo (contrasts with green and white)
+    border: '3px solid rgba(75, 0, 130, 0.9)',
+    boxShadow: '0 0 20px rgba(75, 0, 130, 0.8), 0 0 40px rgba(75, 0, 130, 0.4)',
+  },
+};
+
+// Cursor particle animation
+export const particleAnimation = {
+  initial: { opacity: 0.9, scale: 1 },
+  animate: { 
+    opacity: 0, 
+    scale: 0.6,
+    transition: { duration: 1.2 } 
+  }
+};

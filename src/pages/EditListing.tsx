@@ -62,10 +62,12 @@ interface CategoryField {
   id: string;
   field_name: string;
   field_label: string;
-  field_type: 'text' | 'number' | 'boolean' | 'select';
+  field_type: 'text' | 'number' | 'boolean' | 'select' | 'date';
   required: boolean;
-  options: string[];
+  field_options: { options?: string[] } | null;
   category_id: string;
+  created_at: string;
+  updated_at: string;
 }
 
 const isPriceUnit = (value: unknown): value is PriceUnit => {
@@ -667,79 +669,87 @@ const EditListing = () => {
                   <CardDescription>Additional information specific to this category</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  {fields.map((field) => {
-                    console.log('Rendering field:', field);
-                    return (
-                      <div key={field.id}>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          {field.field_label}
-                          {field.required && <span className="text-red-500 ml-1">*</span>}
-                        </label>
-                        
-                        {field.field_type === 'text' && (
-                          <Input
-                            value={categoryFields[field.field_name] || ''}
-                            onChange={(e) => setCategoryFields(prev => ({
-                              ...prev,
-                              [field.field_name]: e.target.value
-                            }))}
-                            required={field.required}
-                          />
-                        )}
+                  {categoryFieldsData?.map((field) => (
+                    <div key={field.id} className="mb-4">
+                      <label className="block text-sm font-medium text-gray-700">
+                        {field.field_label}
+                        {field.required && <span className="text-red-500">*</span>}
+                      </label>
+                      {field.field_type === 'select' && field.field_options?.options ? (
+                        <select
+                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                          value={categoryFieldValues[field.id] || ''}
+                          onChange={(e) => {
+                            const newValues = { ...categoryFieldValues };
+                            newValues[field.id] = e.target.value;
+                            setCategoryFieldValues(newValues);
+                          }}
+                        >
+                          <option value="">{t('select_option')}</option>
+                          {field.field_options.options.map((option) => (
+                            <option key={option} value={option}>
+                              {option}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <>
+                          {field.field_type === 'text' && (
+                            <Input
+                              value={categoryFields[field.field_name] || ''}
+                              onChange={(e) => setCategoryFields(prev => ({
+                                ...prev,
+                                [field.field_name]: e.target.value
+                              }))}
+                              required={field.required}
+                            />
+                          )}
 
-                        {field.field_type === 'number' && (
-                          <Input
-                            type="number"
-                            value={categoryFields[field.field_name] || ''}
-                            onChange={(e) => setCategoryFields(prev => ({
-                              ...prev,
-                              [field.field_name]: e.target.value
-                            }))}
-                            required={field.required}
-                          />
-                        )}
+                          {field.field_type === 'number' && (
+                            <Input
+                              type="number"
+                              value={categoryFields[field.field_name] || ''}
+                              onChange={(e) => setCategoryFields(prev => ({
+                                ...prev,
+                                [field.field_name]: e.target.value
+                              }))}
+                              required={field.required}
+                            />
+                          )}
 
-                        {field.field_type === 'boolean' && (
-                          <Select
-                            value={categoryFields[field.field_name] ? 'yes' : 'no'}
-                            onValueChange={(value) => setCategoryFields(prev => ({
-                              ...prev,
-                              [field.field_name]: value === 'yes'
-                            }))}
-                          >
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select yes/no" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="yes">Yes</SelectItem>
-                              <SelectItem value="no">No</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        )}
+                          {field.field_type === 'boolean' && (
+                            <Select
+                              value={categoryFields[field.field_name] ? 'yes' : 'no'}
+                              onValueChange={(value) => setCategoryFields(prev => ({
+                                ...prev,
+                                [field.field_name]: value === 'yes'
+                              }))}
+                            >
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select yes/no" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="yes">Yes</SelectItem>
+                                <SelectItem value="no">No</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          )}
 
-                        {field.field_type === 'select' && (
-                          <Select
-                            value={categoryFields[field.field_name] || ''}
-                            onValueChange={(value) => setCategoryFields(prev => ({
-                              ...prev,
-                              [field.field_name]: value
-                            }))}
-                          >
-                            <SelectTrigger>
-                              <SelectValue placeholder={`Select ${field.field_label.toLowerCase()}`} />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {Array.isArray(field.options) && field.options.map((option: string) => (
-                                <SelectItem key={option} value={option}>
-                                  {option}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        )}
-                      </div>
-                    );
-                  })}
+                          {field.field_type === 'date' && (
+                            <Input
+                              type="date"
+                              value={categoryFields[field.field_name] || ''}
+                              onChange={(e) => setCategoryFields(prev => ({
+                                ...prev,
+                                [field.field_name]: e.target.value
+                              }))}
+                              required={field.required}
+                            />
+                          )}
+                        </>
+                      )}
+                    </div>
+                  ))}
                 </CardContent>
               </Card>
             )}

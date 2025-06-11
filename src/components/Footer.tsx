@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import CursorToggle from './CursorToggle';
 
 const Footer = () => {
   const { t } = useLanguage();
@@ -67,8 +68,11 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-800 mt-8 pt-8 text-sm text-center">
-          <p>{t('footer.copyright')}</p>
+        <div className="border-t border-gray-800 mt-8 pt-8 text-sm">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <p>{t('footer.copyright')}</p>
+            <CursorToggle className="mt-4 md:mt-0" />
+          </div>
         </div>
       </div>
     </footer>
